@@ -21,6 +21,7 @@
     "dotenv": "^8.6.0",
     "envalid": "^7.3.1",
     "express": "^4.17.3",
+    "express-fileupload": "^1.4.2",
     "express-session": "^1.17.3",
     "express-validator": "6.6.1",
     "helmet": "^4.6.0",
@@ -45,6 +46,6 @@
     "husky": "^4.3.8",
     "nodemon": "^2.0.21"
   },
-  "author": "Nievas Angel Gabriel", 
+  "author": "Nievas Angel Gabriel",
   "license": "ISC"
 }

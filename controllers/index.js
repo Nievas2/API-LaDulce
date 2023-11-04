@@ -6,8 +6,6 @@ const {
   updateUser,
   deleteUser,
   updatePassword,
-  inscription,
-  removeProductRegistration,
   validateCode,
   createCode,
   patchAdmins,
@@ -28,6 +26,7 @@ const {
   deleteCategory,
   getCategoriesProduct,
 } = require('./categoryController');
+const {}=require("./carouselController")
 const UserController = {
   createUser,
   getUserById,
@@ -36,8 +35,6 @@ const UserController = {
   updateUser,
   deleteUser,
   updatePassword,
-  inscription,
-  removeProductRegistration,
   validateCode,
   createCode,
   patchAdmins,

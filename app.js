@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+const fileUpload = require('express-fileupload');
 // Express Dependencies:
 const express = require('express');
 // Sanitizacion XSS
@@ -21,6 +21,7 @@ const config = require('./config/config');
 const validateEnv = require('./utils/validateEnv');
 
 const app = express();
+app.use(fileUpload());
 validateEnv.validate();
 app.use(helmet());
 app.use(helmet.ieNoOpen());
