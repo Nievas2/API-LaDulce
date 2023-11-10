@@ -36,4 +36,24 @@ const getImages= ((req, res) => {
     const imagePath = path.join(__dirname,'..', 'save', 'image', imageName);
     res.sendFile(imagePath);
   });
-module.exports = { upload, getImages, getImage2};
+
+
+  const deleteCarousel= ((req, res) => {
+    const imageName = req.params.imageName;
+    const imagePath = path.join(__dirname,'..', 'save', 'image', imageName);
+    console.log(imagePath)
+    console.log(fs.existsSync(imagePath))
+    // Verifica si el archivo existe antes de intentar eliminarlo
+    if (fs.existsSync(imagePath)) {
+      // Elimina el archivo del sistema de archivos
+      fs.unlink(imagePath, (err) => {
+        if (err) {
+          return res.status(500).send('Error al eliminar la imagen');
+        }
+        res.send('Imagen eliminada correctamente');
+      });
+    } else {
+      res.status(404).send('La imagen no existe');
+    }
+  });
+module.exports = { upload, getImages, getImage2,deleteCarousel};

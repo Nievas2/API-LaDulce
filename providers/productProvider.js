@@ -79,8 +79,8 @@ const updateProduct = async (ProductId, ProductOptions) => {
 
 const deleteProduct = async (ProductId) => {
   try {
-    const select =await Product.update(
-      { where: { id: ProductId, active: true } }
+    const select =await Product.destroy(
+      { where: { id: ProductId } }
     );
     return select
   } catch (error) {
