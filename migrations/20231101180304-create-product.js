@@ -31,6 +31,26 @@ module.exports = {
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       },
+      ImageProductId: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "ImageProducts",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      },
+      SubCategoryId: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "SubCategories",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
