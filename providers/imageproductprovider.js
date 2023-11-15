@@ -1,8 +1,18 @@
-const { Product, ImageProduct } = require("../models");
+const { Product, ImageProduct, ImagesProductAsocciation } = require("../models");
 
 const createImageProduct = async (options) => {
+  const productSelect = await Product.findOne({
+    where: { id: options.Product},
+  });
   const newImageProduct = await ImageProduct.create(options);
-  return newImageProduct;
+
+   
+  //crea la relacion de las tablas
+  const relation = await ImagesProductAsocciation.create({
+    ImageProductId: newImageProduct.id,
+    ProductId: productSelect.id,
+  });
+  return relation;
 };
 const getImageProductsProduct = async (imageProductName) => {
   const imageProducts = await ImageProduct.findOne({
@@ -21,23 +31,11 @@ const getImageProducts = async () => {
 };
 
 const getImageProductById = async (id) => {
-  const imageProduct = await ImageProduct.findByPk(id, {
-    include: [
-      {
-        model: Product,
-      },
-    ],
-  });
+  const imageProduct = await ImageProduct.findByPk(id);
   return imageProduct;
 };
 const getImageProductByName = async (nameSelect) => {
-  const imageProduct = await ImageProduct.findOne({ where: { name: nameSelect } },{
-    include: [
-      {
-        model: Product,
-      },
-    ],
-  });
+  const imageProduct = await ImageProduct.findOne({ where: { name: nameSelect } });
   return imageProduct;
 };
 const updateImageProduct = async (ImageProductId, ImageProductOptions) => {

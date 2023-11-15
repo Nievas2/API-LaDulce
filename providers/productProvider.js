@@ -3,7 +3,8 @@ const {
   Category,
   SubCategoryProduct,
   ImageProduct,
-  SubCategory
+  SubCategory,
+  ImagesProductAsocciation,
 } = require("../models");
 const CategoryProvider = require("./categoryProvider");
 
@@ -32,10 +33,17 @@ const getProductById = async (productId) => {
     const productSelect = await Product.findOne({
       where: { id: productId },
       include: [
+        { 
+          model: SubCategoryProduct,
+          include: [SubCategory],
+        },
         {
           model: Category,
-          
         },
+        {
+          model: ImagesProductAsocciation,
+          include: [ImageProduct]
+        }
       ],
     });
     return productSelect;
@@ -49,12 +57,17 @@ const getProducts = async () => {
   try {
     const products = await Product.findAll({
       include: [
-        {
-          model: Category,
+        { 
           model: SubCategoryProduct,
           include: [SubCategory],
-          /* model: ImageProduct, */
         },
+        {
+          model: Category,
+        },
+        {
+          model: ImagesProductAsocciation,
+          include: [ImageProduct]
+        }
       ],
     });
 

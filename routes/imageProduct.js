@@ -12,7 +12,6 @@ router.post('/', body('image').isString(),body('Product').isInt(),ImageProductCo
 router.put(
   '/:ImageProductId',
   body('image').isString(),
-  body('Product').isInt(),
   ImageProductController.updateImageProduct,
 );
 

@@ -4,15 +4,6 @@ const createSubCategory = async (options) => {
   const productSelect = await Product.findOne({
     where: { id: options.Product},
   });
-
- /*  if (checkExist)throw new Error("Schedule already exists");
-  const productSelect = await Product.findOne({
-    where: { id: options.course },
-  });
-  if (!productSelect) {
-    throw new Error("no get Product found");
-  } */
-
   const newSubCategory = await SubCategory.create(options);
 
   

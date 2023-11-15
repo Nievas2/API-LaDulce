@@ -17,12 +17,13 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'CategoryId',
       });
       /*  */
-     /*  Product.hasMany(models.ImageProduct);
-      models.ImageProduct.belongsTo(Product, {
-        foreignKey: 'ImageProductId',
-      }); */
+
       /*  */
       Product.hasMany(models.SubCategoryProduct, {
+        foreignKey: 'ProductId',
+      });
+      /*  */
+      Product.hasMany(models.ImagesProductAsocciation, {
         foreignKey: 'ProductId',
       });
     }
