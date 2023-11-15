@@ -26,6 +26,25 @@ const {
   updateCategory,
   getCategoriesProduct,
 } = require('./categoryProvider');
+const {
+  createSubCategory,
+  deleteSubCategory,
+  getSubCategoryById,
+  getSubCategories,
+  updateSubCategory,
+  getSubCategoriesProduct,
+} = require('./SubCategoryProvider');
+const {
+  createImageProduct,
+  deleteImageProduct,
+  getImageProductById,
+  getImageProducts,
+  updateImageProduct,
+  getImageProductByName,
+  getImageProductsProduct,
+} = require("./imageproductprovider");
+
+
 const UserProvider = {
   createUser,
   deleteUser,
@@ -54,8 +73,27 @@ const CategoryProvider = {
   updateCategory,
   getCategoriesProduct,
 };
+const SubCategoryProvider = {
+  createSubCategory,
+  deleteSubCategory,
+  getSubCategoryById,
+  getSubCategories,
+  updateSubCategory,
+  getSubCategoriesProduct,
+};
+const ImageProductProvider = {
+  createImageProduct,
+  deleteImageProduct,
+  getImageProductById,
+  getImageProducts,
+  updateImageProduct,
+  getImageProductByName,
+  getImageProductsProduct,
+};
 module.exports = {
   UserProvider,
   CategoryProvider,
   ProductProvider,
+  SubCategoryProvider,
+  ImageProductProvider,
 };

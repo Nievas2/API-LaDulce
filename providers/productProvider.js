@@ -1,6 +1,9 @@
 const {
   Product,
   Category,
+  SubCategoryProduct,
+  ImageProduct,
+  SubCategory
 } = require("../models");
 const CategoryProvider = require("./categoryProvider");
 
@@ -31,6 +34,7 @@ const getProductById = async (productId) => {
       include: [
         {
           model: Category,
+          
         },
       ],
     });
@@ -47,6 +51,9 @@ const getProducts = async () => {
       include: [
         {
           model: Category,
+          model: SubCategoryProduct,
+          include: [SubCategory],
+          /* model: ImageProduct, */
         },
       ],
     });

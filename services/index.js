@@ -10,14 +10,14 @@ const {
   createCode,
   patchAdmins,
   deleteAdmins,
-} = require('./userService');
+} = require("./userService");
 const {
   createProduct,
   deleteProduct,
   getProduct,
   getProducts,
   updateProduct,
-} = require('./productService');
+} = require("./productService");
 const {
   createCategory,
   deleteCategory,
@@ -25,7 +25,24 @@ const {
   getCategories,
   updateCategory,
   getCategoriesProduct,
-} = require('./categoryService');
+} = require("./categoryService");
+const {
+  createSubCategory,
+  deleteSubCategory,
+  getSubCategory,
+  getSubCategories,
+  updateSubCategory,
+  getSubCategoriesProduct,
+} = require("./subCategoryService");
+const {
+  createImageProduct,
+  deleteImageProduct,
+  getImageProduct,
+  getImageProducts,
+  updateImageProduct,
+  getImageProductsProduct,
+} = require("./imageProductService");
+
 const UserService = {
   createUser,
   deleteUser,
@@ -54,7 +71,26 @@ const CategoryService = {
   updateCategory,
   getCategoriesProduct,
 };
+const SubCategoryService = {
+  createSubCategory,
+  deleteSubCategory,
+  getSubCategory,
+  getSubCategories,
+  updateSubCategory,
+  getSubCategoriesProduct,
+};
+const ImageProductService = {
+  createImageProduct,
+  deleteImageProduct,
+  getImageProduct,
+  getImageProducts,
+  updateImageProduct,
+  getImageProductsProduct,
+};
 module.exports = {
-   UserService,
+  UserService,
   ProductService,
-CategoryService, }
+  CategoryService,
+  SubCategoryService,
+  ImageProductService,
+};

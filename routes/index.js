@@ -10,8 +10,10 @@ const app = Express();
 const userRouter = require('./userRouter');
 const authRouter = require('./authenticationRouter');
 const categoryRouter = require('./category');
-const productRouter = require('./product')
-const carouselRouter = require("./carousel")
+const productRouter = require('./product');
+const carouselRouter = require("./carousel");
+const imageProduct = require("./imageProduct");
+const subCategory = require("./subCategory");
 // use=
 app.use('/ping', authMW, adminCheck, (req, res) => {
   res.json({
@@ -23,7 +25,9 @@ app.use('/user', userRouter);
 app.use('/auth', authRouter);
 app.use('/category', categoryRouter);
 app.use('/product', productRouter);
-app.use('/carousel', carouselRouter)
+app.use('/carousel', carouselRouter);
+app.use("/subcategory", subCategory);
+app.use("/imageproduct", imageProduct);
 // endpoints arriba de esta linea
 app.use('/', rootPath.handler);
 

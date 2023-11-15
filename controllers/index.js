@@ -26,7 +26,23 @@ const {
   deleteCategory,
   getCategoriesProduct,
 } = require('./categoryController');
-const {}=require("./carouselController")
+const {
+  createSubCategory,
+  getSubCategoryById,
+  getSubCategories,
+  updateSubCategory,
+  deleteSubCategory,
+  getSubCategoriesProduct,
+}=require("./subCategoryController");
+const{
+  createImageProduct,
+  getImageProductById,
+  getImageProducts,
+  updateImageProduct,
+  deleteImageProduct,
+  getImageProductsProduct,
+} = require("./imageProductController");
+
 const UserController = {
   createUser,
   getUserById,
@@ -56,8 +72,26 @@ const CategoryController = {
   deleteCategory,
   getCategoriesProduct,
 };
+const SubCategoryController = {
+  createSubCategory,
+  getSubCategoryById,
+  getSubCategories,
+  updateSubCategory,
+  deleteSubCategory,
+  getSubCategoriesProduct,
+};
+const ImageProductController = {
+    createImageProduct,
+  getImageProductById,
+  getImageProducts,
+  updateImageProduct,
+  deleteImageProduct,
+  getImageProductsProduct,
+}
 module.exports = {
   UserController,
   CategoryController,
-  ProductController
+  ProductController,
+  SubCategoryController,
+  ImageProductController,
 };
