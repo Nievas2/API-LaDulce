@@ -149,12 +149,14 @@ const updateUser = async (userId, userOptions) => {
     throw ('Error:', error);
   }
 };
-const patchUser = async (userId, newPassword) => {
+const patchPassword = async (code, email, newPassword) => {
   try {
-    const user = await User.findByPk(userId);
-    user.password = newPassword.password;
+    const user = await getUserByEmail(email)
+    if(user.code == code){
+      user.password = newPassword.password;
+    }
     await user.save();
-    return getUserById(userId);
+    return user
   } catch (error) {
     throw ('Error:', error);
   }
@@ -220,9 +222,8 @@ module.exports = {
   getUserByEmail,
   getUsers,
   updateUser,
-  patchUser,
+  patchPassword,
   validateUser,
-
   validateCode,
   createCode,
   patchAdmins,

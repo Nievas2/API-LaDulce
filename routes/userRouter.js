@@ -45,10 +45,15 @@ router.put(
 );
 
 router.patch(
-  '/:userId',
+  '/newpassword/:code/:email',
   body('password').isString(),
   UserController.updatePassword,
 );
+router.post(
+  '/passwordrecovery',
+  body('email').isString(),
+  UserController.passwordRecovery
+)
 router.delete('/:userId', UserController.deleteUser);
 
 module.exports = router;

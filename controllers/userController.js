@@ -41,6 +41,87 @@ const getUsers = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+const passwordRecovery = async (req,res) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    return res.status(400).send({
+      errors: result.array(),
+    });
+  }
+  const {email} = req.body
+  const user = await UserService.getUserByEmail(email)
+  const htmlBody = `
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <style>
+          body {
+              font-family: Arial, sans-serif;
+              background-color: blue ;
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-attachment: fixed;
+              text-align: center;
+          }
+  
+          .container {
+              padding: 20px;
+              background-color: rgba(255, 255, 255, 0.8);
+              border-radius: 10px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+              margin: 50px auto;
+              max-width: 600px;
+          }
+  
+          h1 {
+              color: #333;
+          }
+  
+          h4 {
+              color: red;
+          }
+  
+          .boton {
+              background-color: #007BFF;
+              color: #fff;
+              padding: 10px 20px;
+              text-decoration: none;
+              border-radius: 5px;
+          }
+  
+          .boton:hover {
+              background-color: #0056b3;
+          }
+          b {
+            color: white;
+          }
+      </style>
+  </head>
+  <body>
+      <div class="container">
+          <h1>Necesitamos validar que usted está registrándose</h1>
+          <h4>Si no es usted, verifique hacer un cambio de contraseña o extremar sus medidas de seguridad.</h4>
+          <h3>Si es usted, por favor, vaya al siguiente link <a class="boton" href="http://localhost:4200/login/nuevacontrasena/${user.code}/${user.email}"><b>Crear Nueva Contraseña</b></a></h3>
+      </div>
+  </body>
+  </html>
+  `;
+
+  const transporterSe = await transporter.sendMail({
+    from: process.env.EMAIL,
+    /* to:user.email, */
+    to: user.email,
+    subject: 'Código de valdiacion de email: ',
+    html: htmlBody,
+
+  });
+  return res.status(201).json(transporterSe);
+
+
+
+
+}
 const createUser = async (req, res) => {
   const result = validationResult(req);
   if (!result.isEmpty()) {
@@ -180,13 +261,13 @@ const updatePassword = async (req, res) => {
       errors: result.array(),
     });
   }
-  const { userId } = req.params;
+  const { code, email } = req.params;
   const { password } = req.body;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
   try {
-    // le agrego el dates porque me da error el eslint por la liña 82
-    const updatePasswordDate = await UserService.patchUser(userId, {
+    console.log(code)
+    const updatePasswordDate = await UserService.patchPassword(code, email, {
       password: hashedPassword,
     });
     return res.status(200).json(updatePasswordDate);
@@ -234,4 +315,5 @@ module.exports = {
   createCode,
   patchAdmins,
   deleteAdmins,
+  passwordRecovery,
 };
