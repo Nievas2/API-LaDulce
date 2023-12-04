@@ -11,6 +11,7 @@ const {
   patchAdmins,
   deleteAdmins,
   passwordRecovery,
+  contact,
 } = require("./userController");
 const {
   createProduct,
@@ -57,6 +58,7 @@ const UserController = {
   patchAdmins,
   deleteAdmins,
   passwordRecovery,
+  contact,
 };
 const ProductController = {
   createProduct,

@@ -54,6 +54,7 @@ router.post(
   body('email').isString(),
   UserController.passwordRecovery
 )
+router.post('/contact/:email',body('mensage').isString(), UserController.contact)
 router.delete('/:userId', UserController.deleteUser);
 
 module.exports = router;
