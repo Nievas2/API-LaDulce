@@ -18,10 +18,11 @@ const createCategory = async (req, res) => {
       errors: result.array(),
     });
   }
-  const { name } = req.body;
+  const { name, image } = req.body;
   try {
     const newCategory = await CategoryService.createCategory({
       name,
+      image,
     });
 
     return res.status(201).json(newCategory);
@@ -50,10 +51,11 @@ const updateCategory = async (req, res) => {
     return res.status(400).send({ errors: result.array() });
   }
   const categoryId = req.params.CategoryId;
-  const { name } = req.body;
+  const { name, image } = req.body;
   try {
     const newCategory = await CategoryService.updateCategory(categoryId, {
       name,
+      image,
     });
     return res.status(200).json(newCategory);
   } catch (error) {

@@ -51,19 +51,28 @@ async function start() {
   });
 
   const courseCategory1 = await Category.create({
-    name: 'Programación',
+    name: 'Pastelería',
+    image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1Iw8DACEDKaASv2gd-oh0EipaiOqEa8tDUw&usqp=CAU'
   });
   const courseCategory2 = await Category.create({
-    name: 'Diseño Gráfico',
+    name: 'Tortas',
+    image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdd0zmj3gZsKkbYSrKqFXGXnzHY89gifeQIg&usqp=CAU'
+
   });
   const courseCategory3 = await Category.create({
-    name: 'Idiomas',
+    name: 'Lunch',
+    image:'https://i.pinimg.com/736x/e3/d1/df/e3d1df12f4c72e03778e381e18530c14.jpg'
+
   });
   const courseCategory4 = await Category.create({
-    name: 'Belleza y Moda',
+    name: 'Perniles y carnes',
+    image:'https://cdn5.dibujos.net/dibujos/pintados/201045/cb6b04b11f5c5d6cc3913bb39ba7b334.png'
+
   });
   const courseCategory5 = await Category.create({
-    name: 'Artes Culinarias',
+    name: 'Combos',
+    image:'https://static.vecteezy.com/system/resources/previews/011/676/419/non_2x/illustration-of-burger-and-french-fries-with-a-cup-of-soft-drink-cartoon-illustration-fast-food-junk-food-vector.jpg'
+
   });
   const course1 = await Product.create({
     name: 'Introducción a JavaScript',

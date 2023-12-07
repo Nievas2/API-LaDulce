@@ -8,11 +8,12 @@ const { CategoryController } = require('../controllers');
 router.get('/', CategoryController.getCategories);
 router.get('/:CategoryId', CategoryController.getCategoryById);
 router.get('/product/:CategoryName', CategoryController.getCategoriesProduct);
-router.post('/', body('name').isString(), /* authMW, adminCheck, */ CategoryController.createCategory);
+router.post('/', body('name').isString(),body('image').isString(), /* authMW, adminCheck, */ CategoryController.createCategory);
 
 router.put(
   '/:CategoryId',
   body('name').isString(),
+  body('image').isString(),
   /* authMW, adminCheck, */
   CategoryController.updateCategory,
 );
