@@ -33,7 +33,7 @@ const {
   getSubCategories,
   updateSubCategory,
   getSubCategoriesProduct,
-} = require('./SubCategoryProvider');
+} = require('./subcategoryprovider');
 const {
   createImageProduct,
   deleteImageProduct,
