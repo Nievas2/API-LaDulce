@@ -60,10 +60,9 @@ app.use(express.urlencoded(
 
 // Cors configuration
 const whitelist = process.env.CORS.split(' ');
-
 const corsOptions = {
   origin(origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
+    if (whitelist[0] == "https://ladulcetradicion-9b3b6.web.app" ) {
       callback(null, true);
     } else {
       logger.api.error('Not allowed by CORS', { origin });
