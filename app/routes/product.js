@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
 const { ProductController } = require('../controllers');
-/* const { authMW, adminCheck } = require('../middleware/authentication.middleware'); */
+const { authMW, adminCheck } = require('../middleware/authentication.middleware');
 
 router.get('/', ProductController.getProducts);
 
@@ -16,7 +16,7 @@ router.post(
   body('image').isString(),
   body('price').isInt(),
   body('CategoryName').isString(),
-  /* authMW, adminCheck, */
+  authMW, adminCheck,
   ProductController.createProduct,
 );
 
@@ -27,11 +27,11 @@ router.put(
   body('image').isString(),
   body('price').isInt(),
   body('CategoryName').isString(),
-  /* authMW, adminCheck, */
+  authMW, adminCheck,
   ProductController.updateProduct,
 );
 
-router.delete('/:ProductId', /* authMW, adminCheck, */ ProductController.deleteProduct);
+router.delete('/:ProductId', authMW, adminCheck, ProductController.deleteProduct);
 
 // export
 module.exports = router;

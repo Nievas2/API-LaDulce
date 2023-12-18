@@ -1,13 +1,13 @@
 const express = require('express');
 const { body } = require('express-validator');
 const { UserController } = require('../controllers');
-/* const { authMW, adminCheck } = require('../middleware/authentication.middleware'); */
+const { authMW, adminCheck } = require('../middleware/authentication.middleware');
 
 const router = express.Router();
 router.get('/:userId', UserController.getUserById);
 
-router.delete('/admin/:userId', /* authMW, adminCheck, */ UserController.deleteAdmins);
-router.get('/', /* authMW, adminCheck, */ UserController.getUsers);
+router.delete('/admin/:userId', authMW, adminCheck, UserController.deleteAdmins);
+router.get('/', authMW, adminCheck, UserController.getUsers);
 router.get('/email/:email', UserController.getUserByEmail);
 router.post(
   '/',
@@ -20,7 +20,7 @@ router.post(
 router.patch(
   '/admins',
   body('userId').isInt(),
-  /* authMW, adminCheck, */
+  authMW, adminCheck,
   UserController.patchAdmins,
 );
 
@@ -41,6 +41,7 @@ router.put(
   body('email').isEmail(),
   body('phone').isString(),
   body('password').isString(),
+  authMW, adminCheck,
   UserController.updateUser,
 );
 
@@ -55,6 +56,6 @@ router.post(
   UserController.passwordRecovery
 )
 router.post('/contact/:email',body('mensage').isString(), UserController.contact)
-router.delete('/:userId', UserController.deleteUser);
+router.delete('/:userId',authMW, adminCheck, UserController.deleteUser);
 
 module.exports = router;

@@ -3,18 +3,20 @@ const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
 const { SubCategoryController } = require('../controllers');
+const { authMW, adminCheck } = require('../middleware/authentication.middleware');
 
 router.get('/', SubCategoryController.getSubCategories);
 router.get('/:SubCategoryId', SubCategoryController.getSubCategoryById);
 router.get('/product/:SubCategoryName', SubCategoryController.getSubCategoriesProduct);
-router.post('/', body('date').isString(), body('Product').isInt(),SubCategoryController.createSubCategory);
+router.post('/',authMW, adminCheck, body('date').isString(), body('Product').isInt(),SubCategoryController.createSubCategory);
 
 router.put(
   '/:SubCategoryId',
   body('date').isString(),
+  authMW, adminCheck,
   SubCategoryController.updateSubCategory,
 );
 
-router.delete('/:SubCategoryId', SubCategoryController.deleteSubCategory);
+router.delete('/:SubCategoryId', authMW, adminCheck,SubCategoryController.deleteSubCategory);
 
 module.exports = router;

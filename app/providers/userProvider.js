@@ -164,7 +164,7 @@ const patchPassword = async (code, email, newPassword) => {
 const patchAdmins = async (userId) => {
   try {
     const user = await User.findByPk(userId.userId);
-    user.admin = true;
+    user.admin = !user.admin;
     await user.save();
     return user;
   } catch (error) {
