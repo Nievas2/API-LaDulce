@@ -14,6 +14,7 @@ const productRouter = require('./product');
 const carouselRouter = require("./carousel");
 const imageProduct = require("./imageProduct");
 const subCategory = require("./subCategory");
+const dollarRouter = require("./dollar")
 // use=
 app.use('/ping', authMW, adminCheck, (req, res) => {
   res.json({
@@ -28,6 +29,7 @@ app.use('/product', productRouter);
 app.use('/carousel', carouselRouter);
 app.use("/subcategory", subCategory);
 app.use("/imageproduct", imageProduct);
+app.use("/dollar", dollarRouter)
 // endpoints arriba de esta linea
 app.use('/', rootPath.handler);
 

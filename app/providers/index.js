@@ -43,7 +43,10 @@ const {
   getImageProductByName,
   getImageProductsProduct,
 } = require("./imageproductprovider");
-
+const {
+  updatePrice,
+  getDollar,
+} = require("./dollarProvider")
 
 const UserProvider = {
   createUser,
@@ -90,10 +93,15 @@ const ImageProductProvider = {
   getImageProductByName,
   getImageProductsProduct,
 };
+const DollarProvider = {
+  updatePrice,
+  getDollar,
+}
 module.exports = {
   UserProvider,
   CategoryProvider,
   ProductProvider,
   SubCategoryProvider,
   ImageProductProvider,
+  DollarProvider,
 };

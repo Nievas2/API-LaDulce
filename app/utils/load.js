@@ -7,45 +7,17 @@ const {
   Category,
   User,
   Product,
+  Dollar,
 } = require('../models');
 async function start() {
+  const dollar = await Dollar.create({price : 985});
   const admin = await User.create({
-    firstName: 'Admin',
-    lastName: 'Admin',
+    firstName: 'Gabriel',
+    lastName: 'Nievas',
     code: 'JP001',
-    email: 'admin@admin.com',
+    email: 'angelgabrielnievas@gmail.com',
     phone: '1155555555',
-    password: await bcrypt.hash('password', saltRounds),
-    active: true,
-    admin: true,
-  });
-  const user1 = await User.create({
-    firstName: 'Juan',
-    lastName: 'Pérez',
-    code: 'JP001',
-    email: 'juan.perez@example.com',
-    phone: '1155555555',
-    password: await bcrypt.hash('password', saltRounds),
-    active: true,
-    admin: false,
-  });
-  const user2 = await User.create({
-    firstName: 'María',
-    lastName: 'Gómez',
-    code: 'MG002',
-    email: 'maria.gomez@example.com',
-    phone: '1155555556',
-    password: await bcrypt.hash('password', saltRounds),
-    active: true,
-    admin: false,
-  });
-  const user3 = await User.create({
-    firstName: 'Luis',
-    lastName: 'Rodríguez',
-    code: 'LR003',
-    email: 'luis.rodriguez@example.com',
-    phone: '1155555557',
-    password: await bcrypt.hash('password', saltRounds),
+    password: await bcrypt.hash('adminn', saltRounds),
     active: true,
     admin: true,
   });

@@ -42,6 +42,11 @@ const {
   updateImageProduct,
   getImageProductsProduct,
 } = require("./imageProductService");
+const {
+  updatePrice,
+  getDollar,
+} = require("./dollarService")
+
 
 const UserService = {
   createUser,
@@ -87,10 +92,15 @@ const ImageProductService = {
   updateImageProduct,
   getImageProductsProduct,
 };
+const DollarService = {
+  updatePrice,
+  getDollar,
+}
 module.exports = {
   UserService,
   ProductService,
   CategoryService,
   SubCategoryService,
   ImageProductService,
+  DollarService,
 };

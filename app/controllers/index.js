@@ -19,7 +19,7 @@ const {
   getProducts,
   updateProduct,
   deleteProduct,
-} = require('./productController');
+} = require("./productController");
 const {
   createCategory,
   getCategoryById,
@@ -27,7 +27,7 @@ const {
   updateCategory,
   deleteCategory,
   getCategoriesProduct,
-} = require('./categoryController');
+} = require("./categoryController");
 const {
   createSubCategory,
   getSubCategoryById,
@@ -35,8 +35,8 @@ const {
   updateSubCategory,
   deleteSubCategory,
   getSubCategoriesProduct,
-}=require("./subCategoryController");
-const{
+} = require("./subCategoryController");
+const {
   createImageProduct,
   getImageProductById,
   getImageProducts,
@@ -44,6 +44,12 @@ const{
   deleteImageProduct,
   getImageProductsProduct,
 } = require("./imageProductController");
+const {
+  updatePrice,
+  getDollar,
+} = require("./dollarController")
+
+
 
 const UserController = {
   createUser,
@@ -85,12 +91,16 @@ const SubCategoryController = {
   getSubCategoriesProduct,
 };
 const ImageProductController = {
-    createImageProduct,
+  createImageProduct,
   getImageProductById,
   getImageProducts,
   updateImageProduct,
   deleteImageProduct,
   getImageProductsProduct,
+};
+const DollarController = {
+  updatePrice,
+  getDollar,
 }
 module.exports = {
   UserController,
@@ -98,4 +108,5 @@ module.exports = {
   ProductController,
   SubCategoryController,
   ImageProductController,
+  DollarController,
 };

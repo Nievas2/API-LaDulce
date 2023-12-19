@@ -63,6 +63,8 @@ const whitelist = process.env.CORS.split(' ');
 const corsOptions = {
   origin(origin, callback) {
     if (whitelist[0] == "http://localhost:4200" ) {
+
+    /* if (whitelist[0] == "https://ladulcetradicion-9b3b6.web.app" ) { */
       callback(null, true);
     } else {
       logger.api.error('Not allowed by CORS', { origin });
