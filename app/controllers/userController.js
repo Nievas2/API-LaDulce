@@ -189,6 +189,72 @@ const contact  = async (req, res) => {
     
   }
 }
+const ticket  = async (req, res) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    return res.status(400).send({
+      errors: result.array(),
+    });
+  }
+  const {
+    mensage,
+    email,
+  } = req.body;
+  try {
+    const user = await UserService.getUserByEmail(email)
+    const htmlBody = `
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <style>
+          body {
+              font-family: Arial, sans-serif;
+              background-color: blue ;
+              background-size: cover;
+              background-repeat: no-repeat;
+              background-attachment: fixed;
+              text-align: center;
+          }
+  
+          .container {
+              padding: 20px;
+              background-color: rgba(255, 255, 255, 0.8);
+              border-radius: 10px;
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+              margin: 50px auto;
+              max-width: 600px;
+          }
+  
+        
+          
+  
+      </style>
+  </head>
+  <body>
+      <div class="container">
+          <h1>Mensaje de ticket: </h1>
+          <p>${mensage}</p>
+          <h4>enviado por: ${email}</h4>
+          <h4>Numero de telefono: ${user.phone}</h4>
+      </div>
+  </body>
+  </html>
+  `;
+
+  const transporterSe = await transporter.sendMail({
+    from: process.env.EMAIL,
+    /* to:user.email, */
+    to: user.email,
+    subject: 'Ticket ',
+    html: htmlBody,
+
+  });
+  return res.status(201).json(transporterSe);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+    
+  }
+}
 const createUser = async (req, res) => {
   const result = validationResult(req);
   if (!result.isEmpty()) {
@@ -384,4 +450,5 @@ module.exports = {
   deleteAdmins,
   passwordRecovery,
   contact,
+  ticket,
 };
