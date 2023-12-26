@@ -100,9 +100,12 @@ const passwordRecovery = async (req,res) => {
   </head>
   <body>
       <div class="container">
-          <h1>Necesitamos validar que usted está registrándose</h1>
-          <h4>Si no es usted, verifique hacer un cambio de contraseña o extremar sus medidas de seguridad.</h4>
-          <h3>Si es usted, por favor, vaya al siguiente link <a class="boton" href="http://localhost:4200/login/nuevacontrasena/${user.code}/${user.email}"><b>Crear Nueva Contraseña</b></a></h3>
+          <h1>Recuperacion de contraseña: </h1>
+          <h3>Para actualizar su contraseña ingrese al siguiente link<br>
+            <a class="boton" href="https://ladulcetradicion-9b3b6.web.app/login/nuevacontrasena/${user.code}/${user.email}">
+             <b>Crear Nueva Contraseña</b>
+            </a>
+          </h3>
       </div>
   </body>
   </html>
@@ -112,7 +115,7 @@ const passwordRecovery = async (req,res) => {
     from: process.env.EMAIL,
     /* to:user.email, */
     to: user.email,
-    subject: 'Código de valdiacion de email: ',
+    subject: 'Recuperación de contraseña: ',
     html: htmlBody,
 
   });
@@ -159,10 +162,6 @@ const contact  = async (req, res) => {
               margin: 50px auto;
               max-width: 600px;
           }
-  
-        
-          
-  
       </style>
   </head>
   <body>
@@ -170,15 +169,16 @@ const contact  = async (req, res) => {
           <h1>Mensaje de contactanos: </h1>
           <p>${mensage}</p>
           <h4>enviado por: ${email}</h4>
+          <h4>Nombre: ${user.firstName}</h4>
+          <h4>Numero de telefono: ${user.phone}</h4>
       </div>
   </body>
   </html>
   `;
 
   const transporterSe = await transporter.sendMail({
-    from: process.env.EMAIL,
-    /* to:user.email, */
-    to: user.email,
+    from: user.email,
+    to: process.env.EMAIL,
     subject: 'Contactanos ',
     html: htmlBody,
 
@@ -236,15 +236,15 @@ const ticket  = async (req, res) => {
           <p>${mensage}</p>
           <h4>enviado por: ${email}</h4>
           <h4>Numero de telefono: ${user.phone}</h4>
+          <h4>Nombre por: ${user.firstName}</h4>
       </div>
   </body>
   </html>
   `;
 
   const transporterSe = await transporter.sendMail({
-    from: process.env.EMAIL,
-    /* to:user.email, */
-    to: user.email,
+    from: user.email,
+    to: process.env.EMAIL,
     subject: 'Ticket ',
     html: htmlBody,
 
@@ -267,12 +267,10 @@ const createUser = async (req, res) => {
   } = req.body;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
   let codeselect = '';
-  /* eslint-disable */
   for (let index = 0; index <= 5; index++) {
     const character = Math.ceil(Math.random() * 9);
     codeselect += character;
   }
-  /* eslint-enable */
 
   try {
     const user = await UserService.createUser({
@@ -330,13 +328,19 @@ const createUser = async (req, res) => {
             }
         </style>
     </head>
-    <body>
-        <div class="container">
-            <h1>Necesitamos validar que usted está registrándose</h1>
-            <h4>Si no es usted, verifique hacer un cambio de contraseña o extremar sus medidas de seguridad.</h4>
-            <h3>Si es usted, por favor, vaya al siguiente link <a class="boton" href="http://localhost:4200/verificar-email/${user.email}/${user.code}"><b>verificar</b></a></h3>
-        </div>
-    </body>
+      <body>
+          <div class="container">
+              <h1>HOLA ${user.firstName} BIENVENIDO A LA DULCE!! 🎂​💕​</h1>
+                <h4> 
+                  Necesitamos validar tu cuenta, porfavor ingrese al siguiente link <br>
+                </h4>
+              <h3> 
+                <a class="boton" href="https://ladulcetradicion-9b3b6.web.app/verificar-email/${user.email}/${user.code}">
+                  <b>verificar</b>
+                </a>
+              </h3>
+          </div>
+      </body>
     </html>
     `;
 
@@ -344,7 +348,7 @@ const createUser = async (req, res) => {
       from: process.env.EMAIL,
       /* to:user.email, */
       to: user.email,
-      subject: 'Código de valdiacion de email: ',
+      subject: 'Código de verificación 🎂​💕: ',
       html: htmlBody,
 
     });

@@ -35,13 +35,10 @@ const createCode = async (email) => {
   try {
     const user = await getUserByEmail(email);
     let code = '';
-    // me toma el ++ como error
-    /* eslint-disable */
     for (let index = 0; index <= 5; index++) {
       const character = Math.ceil(Math.random() * 9);
       code += character;
     }
-    /* eslint-enable */
     user.code = code;
     user.save();
     const htmlBody = `
@@ -93,9 +90,10 @@ const createCode = async (email) => {
     </head>
     <body>
         <div class="container">
-            <h1>Necesitamos validar que usted está registrándose</h1>
-            <h4>Si no es usted, verifique hacer un cambio de contraseña o extremar sus medidas de seguridad.</h4>
-            <h3>Si es usted, por favor, vaya al siguiente link <a class="boton" href="http://localhost:4200/verificar-email/${user.email}/${user.code}"><b>verificar</b></a></h3>
+            <h1>Codigo nuevo:</h1>
+            <h4>Hola! hubo un problema en tu validacion. <br>
+              Si no es usted, verifique hacer un cambio de contraseña o extremar sus medidas de seguridad.</h4>
+            <h3>Si es usted, por favor, vaya al siguiente link <a class="boton" href="https://ladulcetradicion-9b3b6.web.app/verificar-email/${user.email}/${user.code}"><b>verificar</b></a></h3>
         </div>
     </body>
     </html>
@@ -104,7 +102,7 @@ const createCode = async (email) => {
     const transporterSe = await transporter.sendMail({
       from: process.env.EMAIL,
       to: user.email,
-      subject: 'Código de valdiacion de email: ',
+      subject: 'Nuevo codigo de verificación: ',
       html: htmlBody,
     });
 

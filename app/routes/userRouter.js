@@ -14,6 +14,7 @@ router.post(
   body('firstName').isString(),
   body('lastName').isString(),
   body('email').isEmail(),
+  body('phone').isString(),
   body('password').isString(),
   UserController.createUser,
 );
