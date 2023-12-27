@@ -8,10 +8,10 @@ const {
   adminCheck,
 } = require("../middleware/authentication.middleware");
 router.put(
-  "/update",
+  "/update/:id",
   authMW,
   adminCheck,
-  body("price").isString(),
+  body("price").isInt(),
   DollarController.updatePrice
 );
 router.get("", DollarController.getDollar)

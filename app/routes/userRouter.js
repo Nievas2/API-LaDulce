@@ -1,6 +1,6 @@
 const express = require('express');
 const { body } = require('express-validator');
-const { UserController } = require('../controllers');
+const { UserController, DollarController } = require('../controllers');
 const { authMW, adminCheck } = require('../middleware/authentication.middleware');
 
 const router = express.Router();
@@ -60,4 +60,11 @@ router.post('/contact/:email',body('mensage').isString(), UserController.contact
 router.post('/ticket',body('mensage').isString(),body('email').isString(), UserController.ticket)
 router.delete('/:userId',authMW, adminCheck, UserController.deleteUser);
 
+router.patch(
+  "/update/:id",
+  authMW,
+  adminCheck,
+  body("price").isInt(),
+  DollarController.updatePrice
+);
 module.exports = router;

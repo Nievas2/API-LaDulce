@@ -3,8 +3,9 @@ const { DollarService } = require("../services");
 
 const updatePrice = async (req, res) => {
   const { price } = req.body;
+  const { id } = req.params;
   try {
-    const update = await DollarService.updatePrice(price);
+    const update = await DollarService.updatePrice(price, id);
     res.status(200).json(update);
   } catch (error) {
     res.status(500).json({
