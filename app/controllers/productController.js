@@ -33,10 +33,10 @@ const createProduct = async (req, res) => {
   }
 };
 const getProductById = async (req, res) => {
-  const courseId = req.params.ProductId;
+  const ProductId = req.params.ProductId;
   try {
-    const course = await ProductService.getProduct(courseId);
-    res.status(200).json(course);
+    const Product = await ProductService.getProduct(ProductId);
+    res.status(200).json(Product);
   } catch (error) {
     res.status(500).json({ 
       message: error.message 
@@ -46,8 +46,8 @@ const getProductById = async (req, res) => {
 
 const getProducts = async (req, res) => {
   try {
-    const course = await ProductService.getProducts();
-    res.status(200).json(course);
+    const Product = await ProductService.getProducts();
+    res.status(200).json(Product);
   } catch (error) {
     res.status(500).json({ 
       message: error.message 
@@ -62,7 +62,7 @@ const updateProduct = async (req, res) => {
       errors: result.array() 
     });
   }
-  const courseId = req.params.ProductId;
+  const ProductId = req.params.ProductId;
   const {
     name,
     image,
@@ -71,7 +71,7 @@ const updateProduct = async (req, res) => {
     CategoryName,
   } = req.body;
   try {
-    const newProduct = await ProductService.updateProduct(courseId, {
+    const newProduct = await ProductService.updateProduct(ProductId, {
       name,
       image,
       description,
@@ -87,9 +87,9 @@ const updateProduct = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
-  const courseId = req.params.ProductId;
+  const ProductId = req.params.ProductId;
   try {
-    const Product = await ProductService.deleteProduct(courseId);
+    const Product = await ProductService.deleteProduct(ProductId);
     res.status(200).json(Product);
   } catch (error) {
     res.status(500).json({ 

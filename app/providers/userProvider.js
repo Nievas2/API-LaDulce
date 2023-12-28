@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const { User, Registered, Course } = require('../models');
+const { User, Registered, Product } = require('../models');
 const transporter = require('../helpers');
 
 const createUser = async (userData) => {

@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       ImageProduct.hasMany(models.ImagesProductAsocciation, {
         foreignKey: 'ImageProductId',
       });
+      
     }
   }
   ImageProduct.init({
