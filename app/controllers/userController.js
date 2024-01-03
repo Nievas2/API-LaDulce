@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const { UserService } = require('../services');
 const transporter = require('../helpers');
 
-const saltRounds = 10;
+const saltRounds = parseInt(process.env.SALTROUNDS);
 
 const createCode = async (req, res) => {
   const { email } = req.body;
