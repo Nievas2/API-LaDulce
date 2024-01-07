@@ -1,4 +1,4 @@
-const { Product, Category } = require("../models");
+const { Product, Category, ImagesProductAsocciation, ImageProduct} = require("../models");
 
 const createCategory = async (options) => {
   const newCategory = await Category.create(options);
@@ -10,7 +10,13 @@ const getCategoriesProduct = async (categoryName) => {
     include: [
       {
         model: Product,
-      },
+        include: [
+          {
+            model: ImagesProductAsocciation,
+            include: [ImageProduct]
+          },
+        ],
+      }
     ],
   });
   return categories;
