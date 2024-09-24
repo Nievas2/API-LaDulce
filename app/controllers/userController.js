@@ -1,55 +1,55 @@
-const { validationResult } = require('express-validator');
-const bcrypt = require('bcrypt');
-const { UserService } = require('../services');
-const transporter = require('../helpers');
+const { validationResult } = require("express-validator")
+const bcrypt = require("bcrypt")
+const { UserService } = require("../services")
+const transporter = require("../helpers")
 
-const saltRounds = parseInt(process.env.SALTROUNDS);
+const saltRounds = parseInt(process.env.SALTROUNDS)
 
 const createCode = async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.body
   try {
-    const code = await UserService.createCode(email);
+    const code = await UserService.createCode(email)
 
-    res.status(200).json(code);
+    res.status(200).json(code)
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message })
   }
-};
+}
 const getUserById = async (req, res) => {
-  const { userId } = req.params;
+  const { userId } = req.params
   try {
-    const user = await UserService.getUserById(userId);
-    res.status(200).json(user);
+    const user = await UserService.getUserById(userId)
+    res.status(200).json(user)
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message })
   }
-};
+}
 const getUserByEmail = async (req, res) => {
-  const { email } = req.params;
+  const { email } = req.params
   try {
-    const user = await UserService.getUserByEmail(email);
-    res.status(200).json(user);
+    const user = await UserService.getUserByEmail(email)
+    res.status(200).json(user)
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: error.message })
   }
-};
+}
 const getUsers = async (req, res) => {
   try {
-    const users = await UserService.getUsers();
-    return res.status(200).json(users);
+    const users = await UserService.getUsers()
+    return res.status(200).json(users)
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message })
   }
-};
+}
 
-const passwordRecovery = async (req,res) => {
-  const result = validationResult(req);
+const passwordRecovery = async (req, res) => {
+  const result = validationResult(req)
   if (!result.isEmpty()) {
     return res.status(400).send({
-      errors: result.array(),
-    });
+      errors: result.array()
+    })
   }
-  const {email} = req.body
+  const { email } = req.body
   const user = await UserService.getUserByEmail(email)
   const htmlBody = `
   <!DOCTYPE html>
@@ -109,35 +109,26 @@ const passwordRecovery = async (req,res) => {
       </div>
   </body>
   </html>
-  `;
+  `
 
   const transporterSe = await transporter.sendMail({
     from: process.env.EMAIL,
     /* to:user.email, */
     to: user.email,
-    subject: 'Recuperación de contraseña: ',
-    html: htmlBody,
-
-  });
-  return res.status(201).json(transporterSe);
-
-
-
-
+    subject: "Recuperación de contraseña: ",
+    html: htmlBody
+  })
+  return res.status(201).json(transporterSe)
 }
-const contact  = async (req, res) => {
-  const result = validationResult(req);
+const contact = async (req, res) => {
+  const result = validationResult(req)
   if (!result.isEmpty()) {
     return res.status(400).send({
-      errors: result.array(),
-    });
+      errors: result.array()
+    })
   }
-  const {
-    mensage
-  } = req.body;
-  const {
-    email
-  } = req.params;
+  const { mensage } = req.body
+  const { email } = req.params
   try {
     const user = await UserService.getUserByEmail(email)
     const htmlBody = `
@@ -174,32 +165,27 @@ const contact  = async (req, res) => {
       </div>
   </body>
   </html>
-  `;
+  `
 
-  const transporterSe = await transporter.sendMail({
-    from: user.email,
-    to: process.env.EMAIL,
-    subject: 'Contactanos ',
-    html: htmlBody,
-
-  });
-  return res.status(201).json(transporterSe);
+    const transporterSe = await transporter.sendMail({
+      from: user.email,
+      to: process.env.EMAIL,
+      subject: "Contactanos ",
+      html: htmlBody
+    })
+    return res.status(201).json(transporterSe)
   } catch (error) {
-    return res.status(500).json({ message: error.message });
-    
+    return res.status(500).json({ message: error.message })
   }
 }
-const ticket  = async (req, res) => {
-  const result = validationResult(req);
+const ticket = async (req, res) => {
+  const result = validationResult(req)
   if (!result.isEmpty()) {
     return res.status(400).send({
-      errors: result.array(),
-    });
+      errors: result.array()
+    })
   }
-  const {
-    mensage,
-    email,
-  } = req.body;
+  const { mensage, email } = req.body
   try {
     const user = await UserService.getUserByEmail(email)
     const htmlBody = `
@@ -240,36 +226,32 @@ const ticket  = async (req, res) => {
       </div>
   </body>
   </html>
-  `;
+  `
 
-  const transporterSe = await transporter.sendMail({
-    from: user.email,
-    to: process.env.EMAIL,
-    subject: 'Ticket ',
-    html: htmlBody,
-
-  });
-  return res.status(201).json(transporterSe);
+    const transporterSe = await transporter.sendMail({
+      from: user.email,
+      to: process.env.EMAIL,
+      subject: "Ticket ",
+      html: htmlBody
+    })
+    return res.status(201).json(transporterSe)
   } catch (error) {
-    return res.status(500).json({ message: error.message });
-    
+    return res.status(500).json({ message: error.message })
   }
 }
 const createUser = async (req, res) => {
-  const result = validationResult(req);
+  const result = validationResult(req)
   if (!result.isEmpty()) {
     return res.status(400).send({
-      errors: result.array(),
-    });
+      errors: result.array()
+    })
   }
-  const {
-    firstName, lastName, email, phone, password,
-  } = req.body;
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
-  let codeselect = '';
+  const { firstName, lastName, email, phone, password } = req.body
+  const hashedPassword = await bcrypt.hash(password, saltRounds)
+  let codeselect = ""
   for (let index = 0; index <= 5; index++) {
-    const character = Math.ceil(Math.random() * 9);
-    codeselect += character;
+    const character = Math.ceil(Math.random() * 9)
+    codeselect += character
   }
 
   try {
@@ -279,8 +261,8 @@ const createUser = async (req, res) => {
       email,
       phone,
       password: hashedPassword,
-      code: codeselect,
-    });
+      code: codeselect
+    })
     const htmlBody = `
     <!DOCTYPE html>
     <html>
@@ -342,103 +324,100 @@ const createUser = async (req, res) => {
           </div>
       </body>
     </html>
-    `;
+    `
 
     const transporterSe = await transporter.sendMail({
       from: process.env.EMAIL,
       /* to:user.email, */
       to: user.email,
-      subject: 'Código de verificación 🎂​💕: ',
-      html: htmlBody,
-
-    });
-    return res.status(201).json(transporterSe);
+      subject: "Código de verificación 🎂​💕: ",
+      html: htmlBody
+    })
+    return res.status(201).json(transporterSe)
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message })
   }
-};
+}
 const validateCode = async (req, res) => {
-  const { code, email } = req.params;
+  const { code, email } = req.params
   try {
-    const codeVerificado = await UserService.validateCode(code, email);
-    return res.status(200).json(codeVerificado);
+    const codeVerificado = await UserService.validateCode(code, email)
+    return res.status(200).json(codeVerificado)
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message })
   }
-};
+}
 const updateUser = async (req, res) => {
-  const result = validationResult(req);
+  const result = validationResult(req)
   if (!result.isEmpty()) {
     return res.status(400).send({
-      errors: result.array(),
-    });
+      errors: result.array()
+    })
   }
-  const { userId } = req.params;
-  const {
-    firstName, lastName, phone, password,
-  } = req.body;
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  const { userId } = req.params
+  const { firstName, lastName, phone, password } = req.body
+  const hashedPassword = await bcrypt.hash(password, saltRounds)
   try {
     // le agrego el dates porque me da error el eslint por la liña 57
     const updateUserDates = await UserService.updateUser(userId, {
       firstName,
       lastName,
       phone,
-      password: hashedPassword,
-    });
-    return res.status(200).json(updateUserDates);
+      password: hashedPassword
+    })
+    return res.status(200).json(updateUserDates)
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message })
   }
-};
+}
 const updatePassword = async (req, res) => {
-  const result = validationResult(req);
+  const result = validationResult(req)
   if (!result.isEmpty()) {
     return res.status(400).send({
-      errors: result.array(),
-    });
+      errors: result.array()
+    })
   }
-  const { code, email } = req.params;
-  const { password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  const { code, email } = req.params
+  const { password } = req.body
+  const hashedPassword = await bcrypt.hash(password, saltRounds)
 
   try {
     console.log(code)
     const updatePasswordDate = await UserService.patchPassword(code, email, {
-      password: hashedPassword,
-    });
-    return res.status(200).json(updatePasswordDate);
+      password: hashedPassword
+    })
+    return res.status(200).json(updatePasswordDate)
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message })
   }
-};
+}
 const deleteUser = async (req, res) => {
-  const { userId } = req.params;
+  const { userId } = req.params
   try {
-    const user = await UserService.deleteUser(userId);
-    return res.status(200).json(user);
+    const user = await UserService.deleteUser(userId)
+    return res.status(200).json(user)
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message })
   }
-};
+}
 const patchAdmins = async (req, res) => {
-  const userId = req.body;
+  const userId = req.body
   try {
-    const admins = await UserService.patchAdmins(userId);
-    return res.status(200).json(admins);
+    const admins = await UserService.patchAdmins(userId)
+    return res.status(200).json(admins)
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message })
   }
-};
+}
 const deleteAdmins = async (req, res) => {
-  const userId = req.params;
+  const userId = req.params
   try {
-    const admins = await UserService.deleteAdmins(userId);
-    return res.status(200).json(admins);
+    const admins = await UserService.deleteAdmins(userId)
+    return res.status(200).json(admins)
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message })
   }
-};
+}
 // exports
 module.exports = {
   createUser,
@@ -454,5 +433,5 @@ module.exports = {
   deleteAdmins,
   passwordRecovery,
   contact,
-  ticket,
-};
+  ticket
+}

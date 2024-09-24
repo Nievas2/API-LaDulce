@@ -11,7 +11,7 @@ router.get('/product/:SubCategoryName', SubCategoryController.getSubCategoriesPr
 router.post('/',authMW, adminCheck, body('date').isString(), body('Product').isInt(),SubCategoryController.createSubCategory);
 
 router.put(
-  '/:SubCategoryId',
+  '/edit/:SubCategoryId',
   body('date').isString(),
   authMW, adminCheck,
   SubCategoryController.updateSubCategory,

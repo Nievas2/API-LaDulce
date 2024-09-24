@@ -1,46 +1,53 @@
-const bcrypt = require('bcrypt');
-const { User, Registered, Product } = require('../models');
-const transporter = require('../helpers');
+const bcrypt = require("bcrypt")
+const { User } = require("../models")
+const transporter = require("../helpers")
 
 const createUser = async (userData) => {
   try {
-    const newUser = await User.create(userData);
-    return newUser;
+    const newUser = await User.create(userData)
+    return newUser
   } catch (error) {
-    throw ('Error:', error);
+    throw ("Error:", error)
   }
-};
+}
+const createUserforGoogle = async (userData) => {
+  try {
+    const newUser = await User.create(userData)
+    return newUser
+  } catch (error) {
+    throw ("Error:", error)
+  }
+}
 const getUserById = async (id) => {
   try {
     const user = await User.findByPk(id, {
-      attributes: { exclude: ['password'] },
-          });
-    return user;
+      attributes: { exclude: ["password"] }
+    })
+    return user
   } catch (error) {
-    throw ('Error:', error);
+    throw ("Error:", error)
   }
-};
+}
 const getUserByEmail = async (option) => {
   try {
     const user = await User.findOne({
-      where: { email: option },
-      
-    });
-    return user;
+      where: { email: option }
+    })
+    return user
   } catch (error) {
-    throw ('Error:', error);
+    throw ("Error:", error)
   }
-};
+}
 const createCode = async (email) => {
   try {
-    const user = await getUserByEmail(email);
-    let code = '';
+    const user = await getUserByEmail(email)
+    let code = ""
     for (let index = 0; index <= 5; index++) {
-      const character = Math.ceil(Math.random() * 9);
-      code += character;
+      const character = Math.ceil(Math.random() * 9)
+      code += character
     }
-    user.code = code;
-    user.save();
+    user.code = code
+    user.save()
     const htmlBody = `
     <!DOCTYPE html>
     <html>
@@ -97,122 +104,153 @@ const createCode = async (email) => {
         </div>
     </body>
     </html>
-    `;
+    `
 
     const transporterSe = await transporter.sendMail({
       from: process.env.EMAIL,
       to: user.email,
-      subject: 'Nuevo codigo de verificación: ',
-      html: htmlBody,
-    });
+      subject: "Nuevo codigo de verificación: ",
+      html: htmlBody
+    })
 
-    return transporterSe;
+    return transporterSe
   } catch (error) {
-    throw ('Error:', error);
+    throw ("Error:", error)
   }
-};
+}
 
 const validateCode = async (code, email) => {
   try {
-    const user = await getUserByEmail(email);
+    const user = await getUserByEmail(email)
     if (user.code !== code) {
-      throw new Error('Error: incorrect code');
+      throw new Error("Error: incorrect code")
     }
-    user.active = true;
-    user.save();
-    return user;
+    user.active = true
+    user.save()
+    return user
   } catch (error) {
-    throw ('Error:', error);
+    throw ("Error:", error)
   }
-};
+}
 const getUsers = async () => {
   try {
     const options = {
       include: [{ all: true }],
-      attributes: { exclude: ['password'] },
-    };
-    const users = await User.findAll(options);
-    return users;
+      attributes: { exclude: ["password"] }
+    }
+    const users = await User.findAll(options)
+    return users
   } catch (error) {
-    throw ('Error:', error);
+    throw ("Error:", error)
   }
-};
+}
 
 const updateUser = async (userId, userOptions) => {
   try {
-    await getUserById(userId);
-    await User.update(userOptions, { where: { id: userId } });
-    return getUserById(userId);
+    await getUserById(userId)
+    await User.update(userOptions, { where: { id: userId } })
+    return getUserById(userId)
   } catch (error) {
-    throw ('Error:', error);
+    throw ("Error:", error)
   }
-};
+}
 const patchPassword = async (code, email, newPassword) => {
   try {
     const user = await getUserByEmail(email)
-    if(user.code == code){
-      user.password = newPassword.password;
+    if (user.code === code) {
+      user.password = newPassword.password
     }
-    await user.save();
+    await user.save()
     return user
   } catch (error) {
-    throw ('Error:', error);
+    throw ("Error:", error)
   }
-};
+}
 const patchAdmins = async (userId) => {
   try {
-    const user = await User.findByPk(userId.userId);
-    user.admin = !user.admin;
-    await user.save();
-    return user;
+    const user = await User.findByPk(userId.userId)
+    user.admin = !user.admin
+    await user.save()
+    return user
   } catch (error) {
-    throw ('Error:', error);
+    throw ("Error:", error)
   }
-};
+}
 const deleteAdmins = async (userId) => {
   try {
-    const user = await User.findByPk(userId.userId);
-    user.admin = false;
-    await user.save();
-    return user;
+    const user = await User.findByPk(userId.userId)
+    user.admin = false
+    await user.save()
+    return user
   } catch (error) {
-    throw ('Error:', error);
+    throw ("Error:", error)
   }
-};
+}
 const deleteUser = async (userId) => {
   try {
     return await User.update(
       { active: false },
-      { where: { id: userId, active: true } },
-    );
+      { where: { id: userId, active: true } }
+    )
   } catch (error) {
-    throw ('Error:', error);
+    throw ("Error:", error)
   }
-};
+}
 const validateUser = async (emailSelect, password) => {
   const userData = await User.findOne({
-    where: { email: emailSelect },
-  });
-  if (userData == null) { return null; }
-  const hashedPassword = userData.password;
-  const match = await bcrypt.compare(password, hashedPassword);
+    where: { email: emailSelect }
+  })
+  if (userData == null) {
+    return null
+  }
+  const hashedPassword = userData.password
+  const match = await bcrypt.compare(password, hashedPassword)
   if (match) {
     try {
       const user = await User.findOne({
-        where: { email: emailSelect, active: true },
-      });
+        where: { email: emailSelect, active: true }
+      })
       if (user) {
-        return user;
+        return user
       }
-      return false;
+      return false
     } catch (error) {
-      throw ('Error:', error);
+      throw ("Error:", error)
     }
   } else {
-    return false;
+    return false
   }
-};
-
+}
+const validateUserGoogle = async (emailSelect) => {
+  const userData = await User.findOne({
+    where: { email: emailSelect }
+  })
+  if (userData == null) {
+    return null
+  }
+  try {
+    const user = await User.findOne({
+      where: { email: emailSelect, active: true }
+    })
+    if (user) {
+      return user
+    }
+    return false
+  } catch (error) {
+    throw ("Error:", error)
+  }
+}
+const checkAdmins = async (userId) => {
+  try {
+    const user = await User.findByPk(userId)
+    if (user.admin) {
+      return true
+    }
+    return false
+  } catch (error) {
+    throw ("Error:", error)
+  }
+}
 module.exports = {
   createUser,
   deleteUser,
@@ -226,4 +264,7 @@ module.exports = {
   createCode,
   patchAdmins,
   deleteAdmins,
-};
+  createUserforGoogle,
+  validateUserGoogle,
+  checkAdmins
+}
