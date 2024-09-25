@@ -55,26 +55,33 @@ const getProductById = async (productId) => {
   }
 }
 
-const getProducts = async (page, query) => {
-  const limit = pageSize // Número de registros por página
-  const offset = (page - 1) * pageSize // Calcular desde dónde comenzar
+const getProducts = async (page, query, categoryId) => {
+  const limit = pageSize; // Número de registros por página
+  const offset = (page - 1) * pageSize; // Calcular desde dónde comenzar
+  console.log('Category ID:', categoryId); // Verificar el valor de categoryId
 
   try {
+    const whereConditions = {
+      [Op.or]: [
+        {
+          name: {
+            [Op.like]: `%${query}%` // Coincidencia parcial
+          }
+        }
+      ]
+    };
+
+    // Solo agrega la condición de CategoryId si categoryId no está vacío
+    if (categoryId) {
+      whereConditions.CategoryId = {
+        [Op.eq]: categoryId
+      };
+    }
+
     const data = await Product.findAndCountAll({
       limit,
       offset,
-      where: query
-        ? {
-            [Op.or]: [
-              {
-                name: {
-                  [Op.like]: `%${query}%` // Coincidencia parcial
-                }
-              }
-              // Puedes agregar más campos si es necesario
-            ]
-          }
-        : {}, // Si no hay query, no se aplica filtro
+      where: whereConditions,
       include: [
         {
           model: SubCategoryProduct,
@@ -89,11 +96,11 @@ const getProducts = async (page, query) => {
         }
       ],
       distinct: true // Asegúrate de que los resultados sean únicos
-    })
+    });
 
-    const { count } = data
-    const products = data.rows
-    const totalPages = Math.ceil(count / pageSize)
+    const { count } = data;
+    const products = data.rows;
+    const totalPages = Math.ceil(count / pageSize);
 
     return {
       products,
@@ -101,12 +108,12 @@ const getProducts = async (page, query) => {
       pageSize,
       totalPages,
       totalProducts: count
-    }
+    };
   } catch (error) {
-    console.error("Error fetching products:", error) // Mejora el manejo de errores
-    throw error
+    console.error("Error fetching products:", error); // Mejora el manejo de errores
+    throw error;
   }
-}
+};
 
 const updateProduct = async (ProductId, ProductOptions) => {
   try {

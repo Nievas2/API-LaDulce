@@ -39,11 +39,12 @@ const getProductById = async (req, res) => {
 
 const getProducts = async (req, res) => {
   let { page } = req.params
-  let { query } = req.query
+  let { query, categoryId } = req.query
   if (!page) page = 1
   if (!query) query = ""
+  if (!categoryId) categoryId = ""
   try {
-    const Product = await ProductService.getProducts(page, query)
+    const Product = await ProductService.getProducts(page, query, categoryId)
     res.status(200).json(Product)
   } catch (error) {
     res.status(500).json({

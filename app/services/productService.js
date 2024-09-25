@@ -4,8 +4,8 @@ const getProduct = async (id) => {
   return await ProductProvider.getProductById(id)
 }
 
-const getProducts = async (page, query) => {
-  return await ProductProvider.getProducts(page, query)
+const getProducts = async (page, query, categoryId) => {
+  return await ProductProvider.getProducts(page, query, categoryId)
 }
 
 const createCategory = async (options) => {
