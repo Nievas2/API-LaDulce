@@ -64,7 +64,7 @@ app.use(
 const whitelist = process.env.CORS.split(" ")
 const corsOptions = {
   origin(origin, callback) {
-    if (/* whitelist[0] === origin */ true) {
+    if (whitelist[0] === origin /* true */) {
       callback(null, true)
     } else {
       logger.api.error("Not allowed by CORS", { origin })
