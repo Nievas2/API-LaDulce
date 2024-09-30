@@ -10,6 +10,8 @@ const {
 
 router.get("/:page", ProductController.getProducts)
 
+router.get("/name/:name", ProductController.getProductByName)
+
 router.get("/get/:ProductId", ProductController.getProductById)
 
 router.post(

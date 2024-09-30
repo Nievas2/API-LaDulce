@@ -37,6 +37,18 @@ const getProductById = async (req, res) => {
   }
 }
 
+const getProductByName = async (req, res) => {
+  const { name } = req.params
+  try {
+    const Product = await ProductService.getProductByName(name)
+    res.status(200).json(Product)
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
+}
+
 const getProducts = async (req, res) => {
   let { page } = req.params
   let { query, categoryId } = req.query
@@ -94,5 +106,6 @@ module.exports = {
   getProductById,
   getProducts,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getProductByName
 }

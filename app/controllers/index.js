@@ -19,7 +19,8 @@ const {
   getProductById,
   getProducts,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getProductByName
 } = require("./productController")
 const {
   createCategory,
@@ -69,7 +70,8 @@ const ProductController = {
   getProductById,
   getProducts,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getProductByName
 }
 
 const CategoryController = {

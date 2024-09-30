@@ -17,6 +17,7 @@ const {
   getProductById,
   getProducts,
   updateProduct,
+  getProductByName,
 } = require('./productProvider');
 const {
   createCategory,
@@ -70,6 +71,7 @@ const ProductProvider = {
   getProductById,
   getProducts,
   updateProduct,
+  getProductByName,
 };
 const CategoryProvider = {
   createCategory,

@@ -16,7 +16,8 @@ const {
   deleteProduct,
   getProduct,
   getProducts,
-  updateProduct
+  updateProduct,
+  getProductByName
 } = require("./productService")
 const {
   createCategory,
@@ -63,7 +64,8 @@ const ProductService = {
   deleteProduct,
   getProduct,
   getProducts,
-  updateProduct
+  updateProduct,
+  getProductByName
 }
 const CategoryService = {
   createCategory,

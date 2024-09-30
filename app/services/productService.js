@@ -4,6 +4,10 @@ const getProduct = async (id) => {
   return await ProductProvider.getProductById(id)
 }
 
+const getProductByName = async (name) => {
+  return await ProductProvider.getProductByName(name)
+}
+
 const getProducts = async (page, query, categoryId) => {
   return await ProductProvider.getProducts(page, query, categoryId)
 }
@@ -31,5 +35,6 @@ module.exports = {
   deleteProduct,
   getProduct,
   getProducts,
-  updateProduct
+  updateProduct,
+  getProductByName
 }
