@@ -126,12 +126,16 @@ const getProducts = async (page, query, categoryId) => {
     const products = data.rows
     const totalPages = Math.ceil(count / pageSize)
 
+    // Obtener el último ID si hay productos
+    const lastId = products.length > 0 ? products[products.length - 1].id : null
+
     return {
       products,
       page,
       pageSize,
       totalPages,
-      totalProducts: count
+      totalProducts: count,
+      lastId // Agregar lastId al retorno
     }
   } catch (error) {
     console.error("Error fetching products:", error) // Mejora el manejo de errores
