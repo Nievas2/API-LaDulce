@@ -82,7 +82,6 @@ const getProductByName = async (name) => {
 const getProducts = async (page, query, categoryId) => {
   const limit = pageSize // Número de registros por página
   const offset = (page - 1) * pageSize // Calcular desde dónde comenzar
-  console.log("Category ID:", categoryId) // Verificar el valor de categoryId
 
   try {
     const whereConditions = {

@@ -1,7 +1,6 @@
 const { Product, ImageProduct, ImagesProductAsocciation } = require("../models")
 
 const createImageProduct = async (image) => {
-  console.log(image)
   const productSelect = await Product.findOne({
     where: { id: image.idProduct }
   })
@@ -43,13 +42,11 @@ const getImageProductByName = async (nameSelect) => {
   return imageProduct
 }
 const updateImageProduct = async (ImageProductId) => {
-  console.log(ImageProductId)
   const imageProduct = await ImageProduct.update({
     image: ImageProductId.response
   }, {
     where: { id: ImageProductId.idProduct }
   })
-  console.log(imageProduct);
   
   return imageProduct
 }

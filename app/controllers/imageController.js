@@ -3,8 +3,6 @@ const { ImageService } = require("../services")
 
 const createImage = async (req, res) => {
   const form = new formidable.IncomingForm()
-  console.log("form creado")
-
   // Configuración para formidable
   form.keepExtensions = true // Mantener la extensión del archivo
   form.maxFileSize = 10 * 1024 * 1024 // Limitar el tamaño del archivo a 10MB
@@ -20,12 +18,10 @@ const createImage = async (req, res) => {
     }
 
     const filePath = files.image.filepath // Obtener la ruta del archivo subido
-    console.log("por subirse a cloud", filePath)
 
     // Subir el archivo a Cloudinary
     ImageService.createImage(filePath)
       .then((result) => {
-        console.log("funciono la subida a cloudinary")
         return res.json({
           message: "Image uploaded successfully",
           url: result.secure_url

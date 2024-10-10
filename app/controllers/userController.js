@@ -382,7 +382,6 @@ const updatePassword = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, saltRounds)
 
   try {
-    console.log(code)
     const updatePasswordDate = await UserService.patchPassword(code, email, {
       password: hashedPassword
     })

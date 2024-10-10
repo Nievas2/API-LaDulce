@@ -41,8 +41,6 @@ const getImages= ((req, res) => {
   const deleteCarousel= ((req, res) => {
     const imageName = req.params.imageName;
     const imagePath = path.join(__dirname,'..', 'save', 'image', imageName);
-    console.log(imagePath)
-    console.log(fs.existsSync(imagePath))
     // Verifica si el archivo existe antes de intentar eliminarlo
     if (fs.existsSync(imagePath)) {
       // Elimina el archivo del sistema de archivos

@@ -66,7 +66,6 @@ router.post("/login/google", async (req, res) => {
       return res.status(401).json({ message: "Authentication failed" }) // Ensure this is also a return
     }
   } catch (error) {
-    console.log(error)
     return res.status(500).json({ message: "Internal Server Error" }) // Handle errors gracefully
   }
 })
