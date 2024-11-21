@@ -7,7 +7,7 @@ const {
 } = require("../middleware/authentication.middleware")
 
 const router = express.Router()
-router.get("/:userId", UserController.getUserById)
+router.get("/:userId", authMW, adminCheck, UserController.getUserById)
 
 router.delete("/admin/:userId", authMW, adminCheck, UserController.deleteAdmins)
 router.get("/", authMW, adminCheck, UserController.getUsers)

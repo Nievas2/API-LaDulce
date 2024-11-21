@@ -2,16 +2,16 @@ const { Product, ImageProduct, ImagesProductAsocciation } = require("../models")
 
 const createImageProduct = async (image) => {
   const productSelect = await Product.findOne({
-    where: { id: image.idProduct }
+    where: { id: image.idProduct },
   })
   const newImageProduct = await ImageProduct.create({
-    image: image.response
+    image: image.response,
   })
 
   //crea la relacion de las tablas
   const relation = await ImagesProductAsocciation.create({
     ImageProductId: newImageProduct.id,
-    ProductId: productSelect.id
+    ProductId: productSelect.id,
   })
   return relation
 }
@@ -20,9 +20,9 @@ const getImageProductsProduct = async (imageProductName) => {
     where: { name: imageProductName },
     include: [
       {
-        model: Product
-      }
-    ]
+        model: Product,
+      },
+    ],
   })
   return imageProducts
 }
@@ -37,17 +37,20 @@ const getImageProductById = async (id) => {
 }
 const getImageProductByName = async (nameSelect) => {
   const imageProduct = await ImageProduct.findOne({
-    where: { name: nameSelect }
+    where: { name: nameSelect },
   })
   return imageProduct
 }
 const updateImageProduct = async (ImageProductId) => {
-  const imageProduct = await ImageProduct.update({
-    image: ImageProductId.response
-  }, {
-    where: { id: ImageProductId.idProduct }
-  })
-  
+  const imageProduct = await ImageProduct.update(
+    {
+      image: ImageProductId.response,
+    },
+    {
+      where: { id: ImageProductId.idProduct },
+    }
+  )
+
   return imageProduct
 }
 
@@ -62,5 +65,5 @@ module.exports = {
   getImageProducts,
   updateImageProduct,
   getImageProductByName,
-  getImageProductsProduct
+  getImageProductsProduct,
 }

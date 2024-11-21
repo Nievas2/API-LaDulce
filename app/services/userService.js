@@ -1,26 +1,28 @@
-const { UserProvider } = require('../providers');
+const { UserProvider } = require("../providers")
 
-const getUserById = async (id) => UserProvider.getUserById(id);
+const getUserById = async (userId) => UserProvider.getUserById(userId)
 
-const getUserByEmail = async (option) => UserProvider.getUserByEmail(option);
+const getUserByEmail = async (option) => UserProvider.getUserByEmail(option)
 
-const getUsers = async () => UserProvider.getUsers();
+const getUsers = async () => UserProvider.getUsers()
 
-const createUser = async (user) => UserProvider.createUser(user);
+const createUser = async (user) => UserProvider.createUser(user)
 
-const updateUser = async (id, user) => UserProvider.updateUser(id, user);
+const updateUser = async (id, user) => UserProvider.updateUser(id, user)
 
-const patchPassword = async (code, email, newPassword) => UserProvider.patchPassword(code, email, newPassword);
+const patchPassword = async (code, email, newPassword) =>
+  UserProvider.patchPassword(code, email, newPassword)
 
-const deleteUser = async (id) => UserProvider.deleteUser(id);
+const deleteUser = async (id) => UserProvider.deleteUser(id)
 
-const validateCode = async (code, email) => UserProvider.validateCode(code, email);
+const validateCode = async (code, email) =>
+  UserProvider.validateCode(code, email)
 
-const createCode = async (email) => UserProvider.createCode(email);
+const createCode = async (email) => UserProvider.createCode(email)
 
-const patchAdmins = async (userId) => UserProvider.patchAdmins(userId);
+const patchAdmins = async (userId) => UserProvider.patchAdmins(userId)
 
-const deleteAdmins = async (userId) => UserProvider.deleteAdmins(userId);
+const deleteAdmins = async (userId) => UserProvider.deleteAdmins(userId)
 
 module.exports = {
   getUserById,
@@ -34,4 +36,4 @@ module.exports = {
   createCode,
   patchAdmins,
   deleteAdmins,
-};
+}

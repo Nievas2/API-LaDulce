@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt")
-const { User } = require("../models")
+const { User, Cart, Product } = require("../models")
 const transporter = require("../helpers")
 
 const createUser = async (userData) => {
@@ -18,10 +18,17 @@ const createUserforGoogle = async (userData) => {
     throw ("Error:", error)
   }
 }
-const getUserById = async (id) => {
+const getUserById = async (userId) => {
   try {
-    const user = await User.findByPk(id, {
-      attributes: { exclude: ["password"] }
+    const user = await User.findOne({
+      where: { id: userId },
+      attributes: { exclude: ["password"] },
+      include: [
+        {
+          model: Cart,
+          include: [Product]
+        }
+      ]
     })
     return user
   } catch (error) {
@@ -31,7 +38,7 @@ const getUserById = async (id) => {
 const getUserByEmail = async (option) => {
   try {
     const user = await User.findOne({
-      where: { email: option }
+      where: { email: option },
     })
     return user
   } catch (error) {
@@ -110,7 +117,7 @@ const createCode = async (email) => {
       from: process.env.EMAIL,
       to: user.email,
       subject: "Nuevo codigo de verificación: ",
-      html: htmlBody
+      html: htmlBody,
     })
 
     return transporterSe
@@ -136,7 +143,7 @@ const getUsers = async () => {
   try {
     const options = {
       include: [{ all: true }],
-      attributes: { exclude: ["password"] }
+      attributes: { exclude: ["password"] },
     }
     const users = await User.findAll(options)
     return users
@@ -198,7 +205,7 @@ const deleteUser = async (userId) => {
 }
 const validateUser = async (emailSelect, password) => {
   const userData = await User.findOne({
-    where: { email: emailSelect }
+    where: { email: emailSelect },
   })
   if (userData == null) {
     return null
@@ -208,7 +215,7 @@ const validateUser = async (emailSelect, password) => {
   if (match) {
     try {
       const user = await User.findOne({
-        where: { email: emailSelect, active: true }
+        where: { email: emailSelect, active: true },
       })
       if (user) {
         return user
@@ -223,14 +230,14 @@ const validateUser = async (emailSelect, password) => {
 }
 const validateUserGoogle = async (emailSelect) => {
   const userData = await User.findOne({
-    where: { email: emailSelect }
+    where: { email: emailSelect },
   })
   if (userData == null) {
     return null
   }
   try {
     const user = await User.findOne({
-      where: { email: emailSelect, active: true }
+      where: { email: emailSelect, active: true },
     })
     if (user) {
       return user
@@ -266,5 +273,5 @@ module.exports = {
   deleteAdmins,
   createUserforGoogle,
   validateUserGoogle,
-  checkAdmins
+  checkAdmins,
 }

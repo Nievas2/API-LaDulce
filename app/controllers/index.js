@@ -12,7 +12,7 @@ const {
   deleteAdmins,
   passwordRecovery,
   contact,
-  ticket
+  ticket,
 } = require("./userController")
 const {
   createProduct,
@@ -20,7 +20,7 @@ const {
   getProducts,
   updateProduct,
   deleteProduct,
-  getProductByName
+  getProductByName,
 } = require("./productController")
 const {
   createCategory,
@@ -28,7 +28,7 @@ const {
   getCategories,
   updateCategory,
   deleteCategory,
-  getCategoriesProduct
+  getCategoriesProduct,
 } = require("./categoryController")
 const {
   createSubCategory,
@@ -36,7 +36,7 @@ const {
   getSubCategories,
   updateSubCategory,
   deleteSubCategory,
-  getSubCategoriesProduct
+  getSubCategoriesProduct,
 } = require("./subCategoryController")
 const {
   createImageProduct,
@@ -44,10 +44,11 @@ const {
   getImageProducts,
   updateImageProduct,
   deleteImageProduct,
-  getImageProductsProduct
+  getImageProductsProduct,
 } = require("./imageProductController")
 const { updatePrice, getDollar } = require("./dollarController")
 const { createImage } = require("./imageController")
+const { createCart, getCart, updateMountCart } = require("./cartController")
 
 const UserController = {
   createUser,
@@ -63,7 +64,7 @@ const UserController = {
   deleteAdmins,
   passwordRecovery,
   contact,
-  ticket
+  ticket,
 }
 const ProductController = {
   createProduct,
@@ -71,7 +72,7 @@ const ProductController = {
   getProducts,
   updateProduct,
   deleteProduct,
-  getProductByName
+  getProductByName,
 }
 
 const CategoryController = {
@@ -80,7 +81,7 @@ const CategoryController = {
   getCategories,
   updateCategory,
   deleteCategory,
-  getCategoriesProduct
+  getCategoriesProduct,
 }
 const SubCategoryController = {
   createSubCategory,
@@ -88,7 +89,7 @@ const SubCategoryController = {
   getSubCategories,
   updateSubCategory,
   deleteSubCategory,
-  getSubCategoriesProduct
+  getSubCategoriesProduct,
 }
 const ImageProductController = {
   createImageProduct,
@@ -96,14 +97,19 @@ const ImageProductController = {
   getImageProducts,
   updateImageProduct,
   deleteImageProduct,
-  getImageProductsProduct
+  getImageProductsProduct,
 }
 const DollarController = {
   updatePrice,
-  getDollar
+  getDollar,
 }
 const ImageController = {
-  createImage
+  createImage,
+}
+const CartController = {
+  createCart,
+  getCart,
+  updateMountCart,
 }
 
 module.exports = {
@@ -113,5 +119,6 @@ module.exports = {
   SubCategoryController,
   ImageProductController,
   DollarController,
-  ImageController
+  ImageController,
+  CartController,
 }

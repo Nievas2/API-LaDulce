@@ -10,7 +10,7 @@ const {
   createCode,
   patchAdmins,
   deleteAdmins,
-} = require("./userProvider");
+} = require("./userProvider")
 const {
   createProduct,
   deleteProduct,
@@ -18,7 +18,7 @@ const {
   getProducts,
   updateProduct,
   getProductByName,
-} = require('./productProvider');
+} = require("./productProvider")
 const {
   createCategory,
   deleteCategory,
@@ -26,7 +26,7 @@ const {
   getCategories,
   updateCategory,
   getCategoriesProduct,
-} = require('./categoryProvider');
+} = require("./categoryProvider")
 const {
   createSubCategory,
   deleteSubCategory,
@@ -34,7 +34,7 @@ const {
   getSubCategories,
   updateSubCategory,
   getSubCategoriesProduct,
-} = require('./subcategoryprovider');
+} = require("./subcategoryprovider")
 const {
   createImageProduct,
   deleteImageProduct,
@@ -43,14 +43,10 @@ const {
   updateImageProduct,
   getImageProductByName,
   getImageProductsProduct,
-} = require("./imageproductprovider");
-const {
-  updatePrice,
-  getDollar,
-} = require("./dollarProvider")
-const {
-  createimage
-} = require("./imageProvider")
+} = require("./imageproductprovider")
+const { updatePrice, getDollar } = require("./dollarProvider")
+const { createimage } = require("./imageProvider")
+const { createCart, getCart, updateMountCart } = require("./cartProvider")
 
 const UserProvider = {
   createUser,
@@ -64,7 +60,7 @@ const UserProvider = {
   createCode,
   patchAdmins,
   deleteAdmins,
-};
+}
 const ProductProvider = {
   createProduct,
   deleteProduct,
@@ -72,7 +68,7 @@ const ProductProvider = {
   getProducts,
   updateProduct,
   getProductByName,
-};
+}
 const CategoryProvider = {
   createCategory,
   deleteCategory,
@@ -80,7 +76,7 @@ const CategoryProvider = {
   getCategories,
   updateCategory,
   getCategoriesProduct,
-};
+}
 const SubCategoryProvider = {
   createSubCategory,
   deleteSubCategory,
@@ -88,7 +84,7 @@ const SubCategoryProvider = {
   getSubCategories,
   updateSubCategory,
   getSubCategoriesProduct,
-};
+}
 const ImageProductProvider = {
   createImageProduct,
   deleteImageProduct,
@@ -97,13 +93,16 @@ const ImageProductProvider = {
   updateImageProduct,
   getImageProductByName,
   getImageProductsProduct,
-};
+}
 const DollarProvider = {
   updatePrice,
   getDollar,
 }
 const ImageProvider = {
-  createimage
+  createimage,
+}
+const CartProvider = {
+  createCart, getCart, updateMountCart
 }
 
 module.exports = {
@@ -113,5 +112,6 @@ module.exports = {
   SubCategoryProvider,
   ImageProductProvider,
   DollarProvider,
-  ImageProvider
-};
+  ImageProvider,
+  CartProvider,
+}

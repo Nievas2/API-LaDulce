@@ -9,7 +9,7 @@ const {
   validateCode,
   createCode,
   patchAdmins,
-  deleteAdmins
+  deleteAdmins,
 } = require("./userService")
 const {
   createProduct,
@@ -17,7 +17,7 @@ const {
   getProduct,
   getProducts,
   updateProduct,
-  getProductByName
+  getProductByName,
 } = require("./productService")
 const {
   createCategory,
@@ -25,7 +25,7 @@ const {
   getCategory,
   getCategories,
   updateCategory,
-  getCategoriesProduct
+  getCategoriesProduct,
 } = require("./categoryService")
 const {
   createSubCategory,
@@ -33,7 +33,7 @@ const {
   getSubCategory,
   getSubCategories,
   updateSubCategory,
-  getSubCategoriesProduct
+  getSubCategoriesProduct,
 } = require("./subCategoryService")
 const {
   createImageProduct,
@@ -41,10 +41,11 @@ const {
   getImageProduct,
   getImageProducts,
   updateImageProduct,
-  getImageProductsProduct
+  getImageProductsProduct,
 } = require("./imageProductService")
 const { updatePrice, getDollar } = require("./dollarService")
 const { createImage } = require("./imageService")
+const { createCart, getCart, updateMountCart } = require("./cartService")
 
 const UserService = {
   createUser,
@@ -57,7 +58,7 @@ const UserService = {
   validateCode,
   createCode,
   patchAdmins,
-  deleteAdmins
+  deleteAdmins,
 }
 const ProductService = {
   createProduct,
@@ -65,7 +66,7 @@ const ProductService = {
   getProduct,
   getProducts,
   updateProduct,
-  getProductByName
+  getProductByName,
 }
 const CategoryService = {
   createCategory,
@@ -73,7 +74,7 @@ const CategoryService = {
   getCategory,
   getCategories,
   updateCategory,
-  getCategoriesProduct
+  getCategoriesProduct,
 }
 const SubCategoryService = {
   createSubCategory,
@@ -81,7 +82,7 @@ const SubCategoryService = {
   getSubCategory,
   getSubCategories,
   updateSubCategory,
-  getSubCategoriesProduct
+  getSubCategoriesProduct,
 }
 const ImageProductService = {
   createImageProduct,
@@ -89,14 +90,17 @@ const ImageProductService = {
   getImageProduct,
   getImageProducts,
   updateImageProduct,
-  getImageProductsProduct
+  getImageProductsProduct,
 }
 const DollarService = {
   updatePrice,
-  getDollar
+  getDollar,
 }
 const ImageService = {
-  createImage
+  createImage,
+}
+const CartService = {
+  createCart, getCart, updateMountCart
 }
 
 module.exports = {
@@ -106,5 +110,6 @@ module.exports = {
   SubCategoryService,
   ImageProductService,
   DollarService,
-  ImageService
+  ImageService,
+  CartService
 }
