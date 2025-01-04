@@ -1,5 +1,7 @@
 require("dotenv").config()
 const fileUpload = require("express-fileupload")
+// eslint-disable-next-line import/no-extraneous-dependencies
+const rateLimit = require("express-rate-limit")
 // Express Dependencies:
 const express = require("express")
 // Sanitizacion XSS
@@ -29,7 +31,7 @@ app.use(helmet.ieNoOpen())
 const sixtyDaysInSeconds = 5184000
 app.use(
   helmet.hsts({
-    maxAge: sixtyDaysInSeconds
+    maxAge: sixtyDaysInSeconds,
   })
 )
 // Sets "X-Content-Type-Options: nosniff".
@@ -44,19 +46,28 @@ const sess = {
   saveUninitialized: true,
   cookie: {
     sameSite: "strict",
-    secure: true
-  }
+    secure: true,
+  },
 }
 if (config.environment === "production") {
   app.set("trust proxy", 1) // trust first proxy
 }
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  limit: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+  standardHeaders: "draft-8", // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+})
+// Apply the rate limiting middleware to all requests.
+app.use(limiter)
+
 app.use(session(sess))
 app.use(express.json())
 app.use(
   express.urlencoded({
     extended: false,
     limit: "10kb",
-    parameterLimit: 10
+    parameterLimit: 10,
   })
 )
 
@@ -64,13 +75,13 @@ app.use(
 const whitelist = process.env.CORS.split(" ")
 const corsOptions = {
   origin(origin, callback) {
-    if (/* whitelist[0] === origin */ true) {
+    if (whitelist[0] === origin /* true */) {
       callback(null, true)
     } else {
       logger.api.error("Not allowed by CORS", { origin })
       callback(new Error("Not allowed by CORS"))
     }
-  }
+  },
 }
 app.use(cors(corsOptions))
 
