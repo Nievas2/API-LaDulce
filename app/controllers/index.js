@@ -16,6 +16,7 @@ const {
 } = require("./userController")
 const {
   createProduct,
+  checkTicket,
   getProductById,
   getProducts,
   updateProduct,
@@ -68,6 +69,7 @@ const UserController = {
 }
 const ProductController = {
   createProduct,
+  checkTicket,
   getProductById,
   getProducts,
   updateProduct,

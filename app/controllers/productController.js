@@ -25,6 +25,19 @@ const createProduct = async (req, res) => {
     })
   }
 }
+
+const checkTicket = async (req, res) => {
+  const products = req.body
+  try {
+    const Product = await ProductService.checkTicket(products)
+    res.status(200).json(Product)
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
+}
+
 const getProductById = async (req, res) => {
   const { ProductId } = req.params
   try {
@@ -103,6 +116,7 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
   createProduct,
+  checkTicket,
   getProductById,
   getProducts,
   updateProduct,

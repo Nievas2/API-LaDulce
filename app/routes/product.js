@@ -25,6 +25,12 @@ router.post(
   ProductController.createProduct
 )
 
+router.post(
+  "/ticket",
+  authMW,
+  ProductController.checkTicket
+)
+
 router.put(
   "/:ProductId",
   body("name").isString(),

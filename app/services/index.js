@@ -13,6 +13,7 @@ const {
 } = require("./userService")
 const {
   createProduct,
+  checkTicket,
   deleteProduct,
   getProduct,
   getProducts,
@@ -62,6 +63,7 @@ const UserService = {
 }
 const ProductService = {
   createProduct,
+  checkTicket,
   deleteProduct,
   getProduct,
   getProducts,

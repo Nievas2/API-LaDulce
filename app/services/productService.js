@@ -16,6 +16,10 @@ const createCategory = async (options) => {
   return await ProductProvider.createProduct(options)
 }
 
+const checkTicket = async (products) => {
+  return await ProductProvider.checkTicket(products)
+}
+
 const createProduct = async (options) => {
   return await ProductProvider.createProduct(options)
 }
@@ -31,6 +35,7 @@ const deleteProduct = async (id) => {
 //exports
 module.exports = {
   createProduct,
+  checkTicket,
   createCategory,
   deleteProduct,
   getProduct,

@@ -6,7 +6,7 @@ const {
   SubCategoryProduct,
   ImageProduct,
   SubCategory,
-  ImagesProductAsocciation
+  ImagesProductAsocciation,
 } = require("../models")
 const CategoryProvider = require("./categoryProvider")
 
@@ -23,9 +23,52 @@ const createProduct = async (ProductOptions) => {
       image: "",
       description: ProductOptions.description,
       price: ProductOptions.price,
-      CategoryId: getObjetCategory.dataValues.id
+      CategoryId: getObjetCategory.dataValues.id,
     })
     return newProduct
+  } catch (error) {
+    throw error
+  }
+}
+
+const checkTicket = async (productsArray) => {
+  try {
+    const { products = [], subcategories = [] } = productsArray
+
+    // Extraer los IDs de los productos y subcategorías
+    const productIds = products.map((p) => p.id)
+    const subcategoryIds = subcategories.map((sc) => sc.id)
+
+    // Consultar la base de datos
+    const dbProducts = await Product.findAll({
+      where: { id: productIds },
+      attributes: ["id", "price"],
+    })
+
+    const dbSubCategories = await SubCategory.findAll({
+      where: { id: subcategoryIds },
+      attributes: ["id", "price"],
+    })
+
+    // Mapear los datos de la base de datos para facilitar comparaciones
+    const dbProductsMap = Object.fromEntries(
+      dbProducts.map((p) => [p.id, p.price])
+    )
+    const dbSubCategoriesMap = Object.fromEntries(
+      dbSubCategories.map((sc) => [sc.id, sc.price])
+    )
+    // Comparar precios de productos
+    const productDiscrepancies = dbProducts.filter(
+      (p, index) => Number(dbProductsMap[p.id]) !== products[index].price
+    )
+    // Comparar precios de subcategorías
+    const subcategoryDiscrepancies = dbSubCategories.filter(
+      (sc, index) => Number(dbSubCategoriesMap[sc.id]) !== subcategories[index].price
+    )
+    return {
+      productDiscrepancies,
+      subcategoryDiscrepancies,
+    }
   } catch (error) {
     throw error
   }
@@ -38,16 +81,16 @@ const getProductById = async (productId) => {
       include: [
         {
           model: SubCategoryProduct,
-          include: [SubCategory]
+          include: [SubCategory],
         },
         {
-          model: Category
+          model: Category,
         },
         {
           model: ImagesProductAsocciation,
-          include: [ImageProduct]
-        }
-      ]
+          include: [ImageProduct],
+        },
+      ],
     })
     return productSelect
   } catch (error) {
@@ -62,16 +105,16 @@ const getProductByName = async (name) => {
       include: [
         {
           model: SubCategoryProduct,
-          include: [SubCategory]
+          include: [SubCategory],
         },
         {
-          model: Category
+          model: Category,
         },
         {
           model: ImagesProductAsocciation,
-          include: [ImageProduct]
-        }
-      ]
+          include: [ImageProduct],
+        },
+      ],
     })
     return productSelect
   } catch (error) {
@@ -88,16 +131,16 @@ const getProducts = async (page, query, categoryId) => {
       [Op.or]: [
         {
           name: {
-            [Op.like]: `%${query}%` // Coincidencia parcial
-          }
-        }
-      ]
+            [Op.like]: `%${query}%`, // Coincidencia parcial
+          },
+        },
+      ],
     }
 
     // Solo agrega la condición de CategoryId si categoryId no está vacío
     if (categoryId) {
       whereConditions.CategoryId = {
-        [Op.eq]: categoryId
+        [Op.eq]: categoryId,
       }
     }
 
@@ -108,17 +151,17 @@ const getProducts = async (page, query, categoryId) => {
       include: [
         {
           model: SubCategoryProduct,
-          include: [SubCategory]
+          include: [SubCategory],
         },
         {
-          model: Category
+          model: Category,
         },
         {
           model: ImagesProductAsocciation,
-          include: [ImageProduct]
-        }
+          include: [ImageProduct],
+        },
       ],
-      distinct: true // Asegúrate de que los resultados sean únicos
+      distinct: true, // Asegúrate de que los resultados sean únicos
     })
 
     const { count } = data
@@ -134,10 +177,9 @@ const getProducts = async (page, query, categoryId) => {
       pageSize,
       totalPages,
       totalProducts: count,
-      lastId // Agregar lastId al retorno
+      lastId, // Agregar lastId al retorno
     }
   } catch (error) {
-    console.error("Error fetching products:", error) // Mejora el manejo de errores
     throw error
   }
 }
@@ -154,7 +196,7 @@ const updateProduct = async (ProductId, ProductOptions) => {
         description: ProductOptions.description,
         price: ProductOptions.price,
         image: product.image,
-        CategoryId: category.dataValues.id
+        CategoryId: category.dataValues.id,
       },
       { where: { id: ProductId } }
     )
@@ -176,9 +218,10 @@ const deleteProduct = async (ProductId) => {
 //exports
 module.exports = {
   createProduct,
+  checkTicket,
   deleteProduct,
   getProductById,
   getProducts,
   updateProduct,
-  getProductByName
+  getProductByName,
 }

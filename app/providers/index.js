@@ -13,6 +13,7 @@ const {
 } = require("./userProvider")
 const {
   createProduct,
+  checkTicket,
   deleteProduct,
   getProductById,
   getProducts,
@@ -63,6 +64,7 @@ const UserProvider = {
 }
 const ProductProvider = {
   createProduct,
+  checkTicket,
   deleteProduct,
   getProductById,
   getProducts,
