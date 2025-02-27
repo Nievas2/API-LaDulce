@@ -10,6 +10,7 @@ const {
   createCode,
   patchAdmins,
   deleteAdmins,
+  passwordRecovery
 } = require("./userProvider")
 const {
   createProduct,
@@ -61,6 +62,7 @@ const UserProvider = {
   createCode,
   patchAdmins,
   deleteAdmins,
+  passwordRecovery,
 }
 const ProductProvider = {
   createProduct,

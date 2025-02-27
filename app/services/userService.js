@@ -13,6 +13,8 @@ const updateUser = async (id, user) => UserProvider.updateUser(id, user)
 const patchPassword = async (code, email, newPassword) =>
   UserProvider.patchPassword(code, email, newPassword)
 
+const passwordRecovery = async (email) => UserProvider.passwordRecovery(email)
+
 const deleteUser = async (id) => UserProvider.deleteUser(id)
 
 const validateCode = async (code, email) =>
@@ -36,4 +38,5 @@ module.exports = {
   createCode,
   patchAdmins,
   deleteAdmins,
+  passwordRecovery
 }

@@ -10,6 +10,7 @@ const {
   createCode,
   patchAdmins,
   deleteAdmins,
+  passwordRecovery
 } = require("./userService")
 const {
   createProduct,
@@ -60,6 +61,7 @@ const UserService = {
   createCode,
   patchAdmins,
   deleteAdmins,
+  passwordRecovery
 }
 const ProductService = {
   createProduct,

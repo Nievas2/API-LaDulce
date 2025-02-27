@@ -46,85 +46,22 @@ const passwordRecovery = async (req, res) => {
   const result = validationResult(req)
   if (!result.isEmpty()) {
     return res.status(400).send({
-      errors: result.array()
+      errors: result.array(),
     })
   }
   const { email } = req.body
-  const user = await UserService.getUserByEmail(email)
-  const htmlBody = `
-  <!DOCTYPE html>
-  <html>
-  <head>
-      <style>
-          body {
-              font-family: Arial, sans-serif;
-              background-color: blue ;
-              background-size: cover;
-              background-repeat: no-repeat;
-              background-attachment: fixed;
-              text-align: center;
-          }
-  
-          .container {
-              padding: 20px;
-              background-color: rgba(255, 255, 255, 0.8);
-              border-radius: 10px;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-              margin: 50px auto;
-              max-width: 600px;
-          }
-  
-          h1 {
-              color: #333;
-          }
-  
-          h4 {
-              color: red;
-          }
-  
-          .boton {
-              background-color: #007BFF;
-              color: #fff;
-              padding: 10px 20px;
-              text-decoration: none;
-              border-radius: 5px;
-          }
-  
-          .boton:hover {
-              background-color: #0056b3;
-          }
-          b {
-            color: white;
-          }
-      </style>
-  </head>
-  <body>
-      <div class="container">
-          <h1>Recuperacion de contraseña: </h1>
-          <h3>Para actualizar su contraseña ingrese al siguiente link<br>
-            <a class="boton" href="https://ladulcetradicion-9b3b6.web.app/login/nuevacontrasena/${user.code}/${user.email}">
-             <b>Crear Nueva Contraseña</b>
-            </a>
-          </h3>
-      </div>
-  </body>
-  </html>
-  `
-
-  const transporterSe = await transporter.sendMail({
-    from: process.env.EMAIL,
-    /* to:user.email, */
-    to: user.email,
-    subject: "Recuperación de contraseña: ",
-    html: htmlBody
-  })
-  return res.status(201).json(transporterSe)
+  try {
+    const user = await UserService.passwordRecovery(email)
+    return res.status(201).json(user)
+  } catch (error) {
+    return res.status(500).json({ message: error.message })
+  }
 }
 const contact = async (req, res) => {
   const result = validationResult(req)
   if (!result.isEmpty()) {
     return res.status(400).send({
-      errors: result.array()
+      errors: result.array(),
     })
   }
   const { mensage } = req.body
@@ -171,7 +108,7 @@ const contact = async (req, res) => {
       from: user.email,
       to: process.env.EMAIL,
       subject: "Contactanos ",
-      html: htmlBody
+      html: htmlBody,
     })
     return res.status(201).json(transporterSe)
   } catch (error) {
@@ -182,7 +119,7 @@ const ticket = async (req, res) => {
   const result = validationResult(req)
   if (!result.isEmpty()) {
     return res.status(400).send({
-      errors: result.array()
+      errors: result.array(),
     })
   }
   const { mensage, email } = req.body
@@ -232,7 +169,7 @@ const ticket = async (req, res) => {
       from: user.email,
       to: process.env.EMAIL,
       subject: "Ticket ",
-      html: htmlBody
+      html: htmlBody,
     })
     return res.status(201).json(transporterSe)
   } catch (error) {
@@ -243,7 +180,7 @@ const createUser = async (req, res) => {
   const result = validationResult(req)
   if (!result.isEmpty()) {
     return res.status(400).send({
-      errors: result.array()
+      errors: result.array(),
     })
   }
   const { firstName, lastName, email, phone, password } = req.body
@@ -261,7 +198,7 @@ const createUser = async (req, res) => {
       email,
       phone,
       password: hashedPassword,
-      code: codeselect
+      code: codeselect,
     })
     const htmlBody = `
     <!DOCTYPE html>
@@ -313,14 +250,11 @@ const createUser = async (req, res) => {
       <body>
           <div class="container">
               <h1>HOLA ${user.firstName} BIENVENIDO A LA DULCE!! 🎂​💕​</h1>
-                <h4> 
-                  Necesitamos validar tu cuenta, porfavor ingrese al siguiente link <br>
-                </h4>
-              <h3> 
-                <a class="boton" href="https://ladulcetradicion-9b3b6.web.app/verificar-email/${user.email}/${user.code}">
-                  <b>verificar</b>
-                </a>
-              </h3>
+            <h3>Si es usted, por favor, ingrese el siguiente codigo:</h3> 
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 6px; text-align: center; margin: 30px 0;">
+            <span style="font-size: 32px; font-weight: bold; color: #2c3e50; letter-spacing: 5px;">
+              ${user.code}
+            </span>
           </div>
       </body>
     </html>
@@ -331,7 +265,7 @@ const createUser = async (req, res) => {
       /* to:user.email, */
       to: user.email,
       subject: "Código de verificación 🎂​💕: ",
-      html: htmlBody
+      html: htmlBody,
     })
     return res.status(201).json(transporterSe)
   } catch (error) {
@@ -351,7 +285,7 @@ const updateUser = async (req, res) => {
   const result = validationResult(req)
   if (!result.isEmpty()) {
     return res.status(400).send({
-      errors: result.array()
+      errors: result.array(),
     })
   }
   const { userId } = req.params
@@ -363,7 +297,7 @@ const updateUser = async (req, res) => {
       firstName,
       lastName,
       phone,
-      password: hashedPassword
+      password: hashedPassword,
     })
     return res.status(200).json(updateUserDates)
   } catch (error) {
@@ -374,7 +308,7 @@ const updatePassword = async (req, res) => {
   const result = validationResult(req)
   if (!result.isEmpty()) {
     return res.status(400).send({
-      errors: result.array()
+      errors: result.array(),
     })
   }
   const { code, email } = req.params
@@ -383,7 +317,7 @@ const updatePassword = async (req, res) => {
 
   try {
     const updatePasswordDate = await UserService.patchPassword(code, email, {
-      password: hashedPassword
+      password: hashedPassword,
     })
     return res.status(200).json(updatePasswordDate)
   } catch (error) {
@@ -432,5 +366,5 @@ module.exports = {
   deleteAdmins,
   passwordRecovery,
   contact,
-  ticket
+  ticket,
 }

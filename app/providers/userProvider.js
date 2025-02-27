@@ -11,6 +11,12 @@ const createUser = async (userData) => {
   }
 }
 const createUserforGoogle = async (userData) => {
+  let code = ""
+  for (let index = 0; index <= 5; index++) {
+    const character = Math.ceil(Math.random() * 9)
+    code += character
+  }
+  userData.code = code
   try {
     const newUser = await User.create(userData)
     return newUser
@@ -26,9 +32,9 @@ const getUserById = async (userId) => {
       include: [
         {
           model: Cart,
-          include: [Product]
-        }
-      ]
+          include: [Product],
+        },
+      ],
     })
     return user
   } catch (error) {
@@ -107,7 +113,12 @@ const createCode = async (email) => {
             <h1>Codigo nuevo:</h1>
             <h4>Hola! hubo un problema en tu validacion. <br>
               Si no es usted, verifique hacer un cambio de contraseña o extremar sus medidas de seguridad.</h4>
-            <h3>Si es usted, por favor, vaya al siguiente link <a class="boton" href="https://ladulcetradicion-9b3b6.web.app/verificar-email/${user.email}/${user.code}"><b>verificar</b></a></h3>
+            <h3>Si es usted, por favor, ingrese el siguiente codigo:</h3> 
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 6px; text-align: center; margin: 30px 0;">
+            <span style="font-size: 32px; font-weight: bold; color: #2c3e50; letter-spacing: 5px;">
+              ${code}
+            </span>
+          </div>
         </div>
     </body>
     </html>
@@ -169,6 +180,89 @@ const patchPassword = async (code, email, newPassword) => {
     }
     await user.save()
     return user
+  } catch (error) {
+    throw ("Error:", error)
+  }
+}
+const passwordRecovery = async (email) => {
+  try {
+    const user = await getUserByEmail(email)
+    let code = ""
+    for (let index = 0; index <= 5; index++) {
+      const character = Math.ceil(Math.random() * 9)
+      code += character
+    }
+    user.code = code
+    user.save()
+    const htmlBody = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: blue ;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                text-align: center;
+            }
+    
+            .container {
+                padding: 20px;
+                background-color: rgba(255, 255, 255, 0.8);
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                margin: 50px auto;
+                max-width: 600px;
+            }
+    
+            h1 {
+                color: #333;
+            }
+    
+            h4 {
+                color: red;
+            }
+    
+            .boton {
+                background-color: #007BFF;
+                color: #fff;
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 5px;
+            }
+    
+            .boton:hover {
+                background-color: #0056b3;
+            }
+            b {
+              color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Recuperacion de contraseña: </h1>
+            <h3>Para actualizar su contraseña utilize el siguiente codigo:<br></h3>
+             
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 6px; text-align: center; margin: 30px 0;">
+              <span style="font-size: 32px; font-weight: bold; color: #2c3e50; letter-spacing: 5px;">${user.code}</span>
+            </div>
+            
+        </div>
+    </body>
+    </html>
+    `
+
+    const transporterSe = await transporter.sendMail({
+      from: process.env.EMAIL,
+      /* to:user.email, */
+      to: user.email,
+      subject: "Recuperación de contraseña: ",
+      html: htmlBody,
+    })
+    return transporterSe
   } catch (error) {
     throw ("Error:", error)
   }
@@ -266,6 +360,7 @@ module.exports = {
   getUsers,
   updateUser,
   patchPassword,
+  passwordRecovery,
   validateUser,
   validateCode,
   createCode,
