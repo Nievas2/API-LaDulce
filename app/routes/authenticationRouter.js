@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
     )
     res.json({ token })
   } else {
-    res.status(401).json({ message: "Autentication failed" })
+    res.status(400).json({ message: "Contraseña o email incorrecto" })
   }
 })
 

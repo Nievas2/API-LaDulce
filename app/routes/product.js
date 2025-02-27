@@ -5,7 +5,7 @@ const { body } = require("express-validator")
 const { ProductController } = require("../controllers")
 const {
   authMW,
-  adminCheck
+  adminCheck,
 } = require("../middleware/authentication.middleware")
 
 router.get("/:page", ProductController.getProducts)
@@ -18,24 +18,20 @@ router.post(
   "/",
   body("name").isString(),
   body("description").isString(),
-  body("price").isNumeric(),
+  body("price").isNumeric().optional({ nullable: true }),
   body("CategoryName").isString(),
   authMW,
   adminCheck,
   ProductController.createProduct
 )
 
-router.post(
-  "/ticket",
-  authMW,
-  ProductController.checkTicket
-)
+router.post("/ticket", authMW, ProductController.checkTicket)
 
 router.put(
   "/:ProductId",
   body("name").isString(),
   body("description").isString(),
-  body("price").isNumeric(),
+  body("price").isNumeric().optional({ nullable: true }),
   body("CategoryName").isString(),
   authMW,
   adminCheck,
