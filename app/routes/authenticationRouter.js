@@ -14,7 +14,8 @@ router.post("/", async (req, res) => {
   if (user != null && user !== false) {
     const token = jwt.sign(
       { id: user.id, email, isAdmin: user.admin },
-      authmw.SECRET
+      authmw.SECRET,
+      { expiresIn: "7d" }
     )
     res.json({ token })
   } else {
@@ -28,7 +29,7 @@ router.post("/login/google", async (req, res) => {
     const response = await axios.get(
       "https://www.googleapis.com/oauth2/v3/userinfo",
       {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
       }
     )
 
@@ -42,14 +43,14 @@ router.post("/login/google", async (req, res) => {
         email: response.data.email,
         firstName: response.data.given_name,
         lastName: response.data.family_name,
-        password: hashedPassword
+        password: hashedPassword,
       }
       const userCreated = await userProvider.createUser(user)
       const tokenValue = jwt.sign(
         {
           id: userCreated.id,
           email: userCreated.email,
-          isAdmin: userCreated.admin
+          isAdmin: userCreated.admin,
         },
         authmw.SECRET
       )
